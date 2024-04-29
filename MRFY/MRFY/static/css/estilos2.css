@@ -1,0 +1,268 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+*{
+    text-decoration: none;
+    font-family: "Roboto", sans-serif;
+}
+
+.svg__icon{
+    width: 30px;
+    height: 30px;
+}
+
+.icon{
+    width: 70px;
+    height: 70px;
+}
+
+body{
+    margin-left: 80px;
+    transition: margin-left 300ms cubic-bezier(0.785, 0.135, 0.15, 0.86);
+    margin-top: 80px;
+    background: #D7D6B8;
+}
+
+main{
+    padding: 20px;
+}
+
+header{
+    height: 80px;
+    background-color: #62BCB2;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    z-index: 200;
+    transition: width 300ms cubic-bezier(0.785, 0.135, 0.15, 0.86);
+}
+
+.header_standard {
+    width: calc(100% - 80px);
+}
+
+.header_move {
+    width: calc(100% - 250px);
+}
+
+@media screen and (max-width: 760px) {
+    .header_standard {
+        width: calc(100% - 80px);
+    }
+
+    .header_move {
+        width: 100%;
+    }
+}
+
+.icon__menu{
+    width: 50px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateX(10px);
+}
+
+.icon__login{
+    position: absolute; 
+    right: 0;
+    width: 50px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon__menu .svg__icon{
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    position: absolute;
+}
+
+.menu__side{
+    width: 80px;
+    height: 100%;
+    background: #042434;
+    position: fixed;
+    top: 0;
+    left: 0;
+    color: white;
+    font-size: 18px;
+    z-index: 300;
+    overflow: hidden;
+    overflow-y: scroll;
+    /*border-right: 20px solid #042434;*/
+    transition: all 300ms cubic-bezier(0.785, 0.135, 0.15, 0.86);
+}
+
+.menu__side::-webkit-scrollbar{
+    display: none;
+}
+
+.menu__side{
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.name__page{
+    padding: 10px 10px;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.name__page .icon{
+    margin-right: 20px;
+    width: 60px;
+    height: 60px;
+}
+
+.options__menu{
+    padding: 20px 30px;
+    position: absolute;
+    top: 80px;
+}
+
+.options__menu a{
+    color: #ffffffb2;
+    cursor: default;
+    display: block;
+    position: relative;
+    transition: color 300ms;
+}
+
+.options__menu a:hover{
+    color: white;
+}
+
+.icon__login .login a{
+    color: #ffffffb2;
+    cursor: default;
+    display: block;
+    position: relative;
+    transition: color 300ms;
+}
+
+.icon__login .login a:hover{
+    color: white;
+}
+
+.icon__login .login .svg__icon{
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.options__menu .option{
+    padding: 20px 0px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.options__menu .option .svg__icon{
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.options__menu .option h4{
+    font-weight: 400;
+    cursor: pointer;
+}
+
+a.select{
+    color: black;
+    width: 250px;
+}
+
+.select::before{
+    content: '';
+    width: 3px;
+    height: 80%;
+    width: 280px;
+    position: absolute;
+    top: 10%;
+    left: -20px;
+    background: #D7D6B8;
+    border-radius: 20px;
+    margin-right: 50px;
+}
+
+.select .option .svg__icon{
+    filter: invert(1);
+}
+
+.body_move{
+    margin-left: 250px;
+}
+
+.menu__side_move{
+    width: 250px;
+}
+
+@media screen and (max-width: 760px) {
+    .body_move{
+        margin-left: 0px;
+    }
+
+    .menu__side_move{
+        width: 80px;
+        left: -80px;
+    }
+}
+
+.main__container{
+    margin: 10px;
+    padding: 10px;
+    border-radius: 20px;
+    background: white;
+    justify-content: center;
+    align-items: center;
+}
+
+/*Tarjetas de receta*/
+
+.recipe-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+.recipe-image {
+    width: 100%;
+    height: 200px;
+    background: #f0f0f0;
+}
+
+.recipe-image img {
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+}
+
+.recipe-content {
+    padding: 10px;
+}
+
+.recipe-title {
+    font-size: 1.5em;
+}
+
+.recipe-description {
+    color: #666;
+}
+
+.recipe-tags {
+    display: flex;
+    gap: 5px;
+}
+
+.tag {
+    background: #eee;
+    padding: 5px;
+    border-radius: 5px;
+}
