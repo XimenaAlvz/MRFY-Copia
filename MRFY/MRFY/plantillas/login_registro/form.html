@@ -1,0 +1,155 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iniciar sesion</title>
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/estilos2.css' %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body id="body">
+
+    <header id="header" class="header_standard">
+        <div class="icon__menu">
+            <img src="{% static 'images/menu-alt-1-svgrepo-com.svg' %}" alt="icono" class="svg__icon" id="btn_open">
+        </div>
+        <div class="icon__login">
+
+            <a href="#" class="login">
+                <img src="{% static 'images/profile-1335-svgrepo-com.svg' %}" alt="" class="svg__icon" title="Iniciar sesion">
+            </a>
+
+        </div>
+    </header>
+
+    <div class="menu__side" id="menu_side">
+
+        <div class="name__page">
+            <img src="{% static 'images/icon.png' %}" alt="icono" class="icon">
+            <h4 class="title">MRFY</h4>
+        </div>
+
+        <div class="options__menu">
+
+            <a href="/inicio">
+                <div class="option">
+                    <!--<object data="{% static 'images/home-4-svgrepo-com.svg' %}" type="image/svg+xml" class="svg__icon" title="Inicio"></object>-->
+                    <img src="{% static 'images/home-4-svgrepo-com.svg' %}" alt="" class="svg__icon" title="Inicio">
+                    <h4>Inicio</h4>
+                </div>
+            </a>
+
+            <a href="#">
+                <div class="option">
+                    <img src="{% static 'images/add-ellipse-svgrepo-com.svg' %}" alt="" class="svg__icon" title="Subir receta">
+                    <h4>Subir receta</h4>
+                </div>
+            </a>
+
+            <a href="#">
+                <div class="option">
+                    <img src="{% static 'images/hearth-svgrepo-com.svg' %}" alt="" class="svg__icon" title="Favoritos">
+                    <h4>Favoritos</h4>
+                </div>
+            </a>
+
+            <a href="#">
+                <div class="option">
+                    <img src="{% static 'images/shopping-cart-8-svgrepo-com.svg' %}" alt="" class="svg__icon" title="Lista de compras">
+                    <h4>Lista de compras</h4>
+                </div>
+            </a>
+
+            <a href="#">
+                <div class="option">
+                    <img src="{% static 'images/calendar-days-svgrepo-com.svg' %}" alt="" class="svg__icon" title="Recetario semanal">
+                    <h4>Recetario semanal</h4>
+                </div>
+            </a>
+
+            <a href="#" class="select">
+                <div class="option">
+                    <object data="{% static 'images/login-svgrepo-com.svg' %}" type="image/svg+xml" class="svg__icon" title="Iniciar sesion"></object>
+                    <h4>Iniciar sesion</h4>
+                </div>
+            </a>
+
+            <!--<a href="#">
+                <div class="option">
+                    <img src="{% static 'images/exit-svgrepo-com.svg' %}" alt="" class="svg__icon" title="Cerrar sesión">
+                    <h4>Cerrar sesion</h4>
+                </div>
+            </a>-->
+
+        </div>
+
+    </div>
+
+    <main>
+        <div class="main__container" id="login__settings">
+                <div class="container">
+                    <div class="form__box">
+                        <form action="#" class="login__form">
+                            <h2>Iniciar sesion</h2>
+                            <div class="input__box">
+                                <input type="text" required>
+                                <label>Correo electronico</label>
+                                <i class='bx bxs-envelope' ></i>
+                            </div>
+                            <div class="input__box">
+                                <input type="password" required>
+                                <label>Contraseña</label>
+                                <i class='bx bxs-lock-alt' ></i>
+                            </div>
+                            <div class="forget__section">
+                                <p>
+                                    <input type="checkbox" name="" id="">
+                                    Recordarme
+                                </p>
+                                <a href="#">Olvide mi contraseña</a>
+                            </div>
+                            <button class="btn">Iniciar sesion</button>
+                            <div class="account__creation">
+                                <span>¿Necesitas una cuenta? <a href="#" class="register__link">Registrate</a></span>
+                            </div>
+                        </form>
+                        <form action="#" class="register__form">
+                            <h2>Registrarse</h2>
+                            <div class="input__box">
+                                <input type="text" required>
+                                <label>Correo electronico</label>
+                                <i class='bx bxs-envelope' ></i>
+                            </div>
+                            <div class="input__box">
+                                <input type="text" required>
+                                <label>Nombre de usuario</label>
+                                <i class='bx bxs-user' ></i>
+                            </div>
+                            <div class="input__box">
+                                <input type="password" required>
+                                <label>Contraseña</label>
+                                <i class='bx bxs-lock-alt' ></i>
+                            </div>
+                            <div class="input__box">
+                                <input type="password" required>
+                                <label>Confirmar contraseña</label>
+                                <i class='bx bxs-lock-alt' ></i>
+                            </div>
+                            <button class="btn">Registrarse</button>
+                            <div class="account__creation">
+                                <span>¿Ya tienes una cuenta? <a href="#" class="login__link">Inicia sesion</a></span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+        </div>
+    </main>
+
+<script src="{% static 'js/display_menu.js' %}"></script>
+<script src="{% static 'js/switch_login.js' %}"></script>
+
+</body>
+</html>

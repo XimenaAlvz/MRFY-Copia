@@ -24,3 +24,15 @@ def inicio(request):
     ctx = Context()
 
     return HttpResponse(plt.render(ctx))
+
+def login(request):
+
+    doc_ext = open("C:/Users/jerem/OneDrive/Escritorio/MRFY/MRFY/MRFY/MRFY/plantillas/login_registro/form.html")
+
+    plt = Template(doc_ext.read())
+
+    doc_ext.close()
+
+    ctx = Context()
+
+    return HttpResponse(plt.render(ctx))

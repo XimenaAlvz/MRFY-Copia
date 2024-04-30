@@ -16,11 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from MRFY.views import index, inicio
+from MRFY.views import index, inicio, login
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/', index),
     path('inicio/', inicio),
+    path('login/', login),
 ]
