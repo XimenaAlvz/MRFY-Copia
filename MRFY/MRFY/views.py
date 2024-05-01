@@ -36,3 +36,15 @@ def login(request):
     ctx = Context()
 
     return HttpResponse(plt.render(ctx))
+
+def recipe(request):
+
+    doc_ext = open("C:/Users/jerem/OneDrive/Escritorio/MRFY/MRFY/MRFY/MRFY/plantillas/vista_receta/recipe.html")
+
+    plt = Template(doc_ext.read())
+
+    doc_ext.close()
+
+    ctx = Context()
+
+    return HttpResponse(plt.render(ctx))

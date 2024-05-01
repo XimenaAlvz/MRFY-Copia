@@ -1,0 +1,168 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/estilos2.css' %}">
+
+</head>
+<body id="body">
+
+    <header id="header" class="header_standard">
+        <div class="icon__menu">
+            <img src="{% static 'images/menu-alt-1-svgrepo-com.svg' %}" alt="icono" class="svg__icon" id="btn_open">
+        </div>
+        <div class="icon__login">
+
+            <a href="#" class="login">
+                <img src="{% static 'images/profile-1335-svgrepo-com.svg' %}" alt="" class="svg__icon" title="Iniciar sesion">
+            </a>
+
+        </div>
+    </header>
+
+    <div class="menu__side" id="menu_side">
+
+        <div class="name__page">
+            <img src="{% static 'images/icon.png' %}" alt="icono" class="icon">
+            <h4 class="title">MRFY</h4>
+        </div>
+
+        <div class="options__menu">
+
+            <a href="#">
+                <div class="option">
+                    <object data="{% static 'images/home-4-svgrepo-com.svg' %}" type="image/svg+xml" class="svg__icon" title="Inicio"></object>
+                    <!---<img src="{% static 'images/home-4-svgrepo-com.svg' %}" alt="" class="svg__icon" title="Inicio">--->
+                    <h4>Inicio</h4>
+                </div>
+            </a>
+
+            <a href="#">
+                <div class="option">
+                    <img src="{% static 'images/add-ellipse-svgrepo-com.svg' %}" alt="" class="svg__icon" title="Subir receta">
+                    <h4>Subir receta</h4>
+                </div>
+            </a>
+
+            <a href="#">
+                <div class="option">
+                    <img src="{% static 'images/hearth-svgrepo-com.svg' %}" alt="" class="svg__icon" title="Favoritos">
+                    <h4>Favoritos</h4>
+                </div>
+            </a>
+
+            <a href="#">
+                <div class="option">
+                    <img src="{% static 'images/shopping-cart-8-svgrepo-com.svg' %}" alt="" class="svg__icon" title="Lista de compras">
+                    <h4>Lista de compras</h4>
+                </div>
+            </a>
+
+            <a href="#">
+                <div class="option">
+                    <img src="{% static 'images/calendar-days-svgrepo-com.svg' %}" alt="" class="svg__icon" title="Recetario semanal">
+                    <h4>Recetario semanal</h4>
+                </div>
+            </a>
+
+            <a href="#">
+                <div class="option">
+                    <img src="{% static 'images/exit-svgrepo-com.svg' %}" alt="" class="svg__icon" title="Cerrar sesión">
+                    <h4>Cerrar sesion</h4>
+                </div>
+            </a>
+
+        </div>
+
+    </div>
+
+    <main>
+        <div class="main__container" id="recipe__settings">
+
+            <div class="container__recipe">
+
+                <div class="recipe__img">
+                    <img src="{% static 'images/wallpaper4.jpg' %}" alt="">
+                </div>
+
+                <div class="recipe__information">
+                    <h1>Recipe Name</h1>
+                    <p class="description">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus aut earum fugiat provident, quibusdam dicta veritatis quas consequuntur, quos perferendis ex hic consequatur? Illo, rerum?
+                    </p>
+                </div>
+
+                <div class="recipe__prep__time">
+                    <h3>Tiempo de preparación</h3>
+                    <ul>
+                        <li><span>Tiempo total</span>: Aproximadamente 00:00</li>
+                        <li><span>Preparación</span>: 00:00</li>
+                        <li><span>Cocina</span>: 00:00</li>
+                    </ul>
+                </div>
+
+                <div class="recipe__steps">
+                    <h2>Ingredientes</h2>
+                    <ul class="ingredients">
+                        <li><span>blank</span></li>
+                        <li><span>blank</span></li>
+                        <li><span>blank</span></li>
+                    </ul>
+                </div>
+
+                <hr>
+
+                <div class="recipe__steps">
+                    <h2>Instrucciones</h2>
+                    
+                    <div class="instructions">
+                        <div class="item">
+                            <div class="num">1.</div>
+                            <p><span>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Esse a doloremque fugit assumenda eligendi accusantium.</span></p>
+                        </div>
+                        <div class="item">
+                            <div class="num">2.</div>
+                            <p><span>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Esse a doloremque fugit assumenda eligendi accusantium.</span></p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <hr>
+
+                <div class="nutrition__info">
+                    <h2>Información nutrimental</h2>
+
+                    <div class="nutrition__table">
+                        <div class="item">
+                            <p>Calorias</p>
+                            <p class="ammount">000kcal</p>
+                        </div>
+                        <div class="item">
+                            <p>Carbohidratos</p>
+                            <p class="ammount">000g</p>
+                        </div>
+                        <div class="item">
+                            <p>Proteina</p>
+                            <p class="ammount">000g</p>
+                        </div>
+                        <div class="item">
+                            <p>Grasa</p>
+                            <p class="ammount">000g</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+<script src="{% static 'js/display_menu.js' %}"></script>
+    
+</body>
+</html>

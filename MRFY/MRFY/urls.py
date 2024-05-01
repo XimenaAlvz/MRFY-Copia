@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from MRFY.views import index, inicio, login
+from MRFY.views import index, inicio, login, recipe
 
 
 urlpatterns = [
@@ -24,4 +24,5 @@ urlpatterns = [
     path('index/', index),
     path('inicio/', inicio),
     path('login/', login),
+    path('recipe/', recipe),
 ]
