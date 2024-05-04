@@ -14,13 +14,14 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
 from django.urls import path
 from MRFY.views import index, inicio, login, recipe
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', index),  # Empty path maps to the index view
     path('index/', index),
     path('inicio/', inicio),
     path('login/', login),
