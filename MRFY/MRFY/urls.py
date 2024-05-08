@@ -25,5 +25,5 @@ urlpatterns = [
     path('index/', index),
     path('inicio/', inicio),
     path('login/', login),
-    path('recipe/', recipe),
+    path('recipe/<int:id_receta>/', recipe, name='recipe_detail'),
 ]

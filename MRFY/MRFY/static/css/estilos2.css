@@ -233,6 +233,14 @@ a.select{
     padding: 10px;
 }
 
+.recipe-card a{
+    color: black;
+}
+
+.recipe-card a.select{
+    color: black;
+}
+
 .recipe-image {
     width: 100%;
     height: 200px;

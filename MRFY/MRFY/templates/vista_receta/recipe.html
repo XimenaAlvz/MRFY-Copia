@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio</title>
+    <title>Receta</title>
     <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
     <link rel="stylesheet" href="{% static 'css/estilos2.css' %}">
 
@@ -81,6 +81,8 @@
 
     </div>
 
+    
+
     <main>
         <div class="main__container" id="recipe__settings">
 
@@ -91,16 +93,16 @@
                 </div>
 
                 <div class="recipe__information">
-                    <h1>Recipe Name</h1>
+                    <h1>{{ receta.Nombre }}</h1>
                     <p class="description">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus aut earum fugiat provident, quibusdam dicta veritatis quas consequuntur, quos perferendis ex hic consequatur? Illo, rerum?
+                        {{ receta.Comentarios }}
                     </p>
                 </div>
 
                 <div class="recipe__prep__time">
                     <h3>Tiempo de preparación</h3>
                     <ul>
-                        <li><span>Tiempo total</span>: Aproximadamente 00:00</li>
+                        <li><span>Tiempo total</span>: {{ receta.TiempoPreparación }}</li>
                         <li><span>Preparación</span>: 00:00</li>
                         <li><span>Cocina</span>: 00:00</li>
                     </ul>
@@ -122,12 +124,8 @@
                     
                     <div class="instructions">
                         <div class="item">
-                            <div class="num">1.</div>
-                            <p><span>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Esse a doloremque fugit assumenda eligendi accusantium.</span></p>
-                        </div>
-                        <div class="item">
-                            <div class="num">2.</div>
-                            <p><span>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Esse a doloremque fugit assumenda eligendi accusantium.</span></p>
+                            <div class="num">#</div>
+                            <p><span>{{ receta.Instrucciones }}</span></p>
                         </div>
                     </div>
 
@@ -141,7 +139,7 @@
                     <div class="nutrition__table">
                         <div class="item">
                             <p>Calorias</p>
-                            <p class="ammount">000kcal</p>
+                            <p class="ammount">{{ receta.Calorias }}</p>
                         </div>
                         <div class="item">
                             <p>Carbohidratos</p>
@@ -161,6 +159,7 @@
             </div>
         </div>
     </main>
+    
 
 <script src="{% static 'js/display_menu.js' %}"></script>
     
