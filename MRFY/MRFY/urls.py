@@ -17,13 +17,14 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
-from MRFY.views import index, inicio, login, recipe
+from MRFY.views import index, inicio, recipe, register_user
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index),  # Empty path maps to the index view
     path('index/', index),
-    path('inicio/', inicio),
-    path('login/', login),
+    path('inicio/', inicio, name='inicio'),
+    #path('login/', login),
+    path('login/', register_user, name='register_user'),
     path('recipe/<int:id_receta>/', recipe, name='recipe_detail'),
 ]

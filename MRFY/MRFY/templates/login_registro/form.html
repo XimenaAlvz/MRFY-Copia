@@ -116,29 +116,34 @@
                                 <span>¿Necesitas una cuenta? <a href="#" class="register__link">Registrate</a></span>
                             </div>
                         </form>
-                        <form action="#" class="register__form">
+                        <form action="#" class="register__form" method="POST">
+                            {% csrf_token %}
                             <h2>Registrarse</h2>
                             <div class="input__box">
-                                <input type="text" required>
+                                <!---<input type="text" required>--->
+                                {{ form.Correo }}
                                 <label>Correo electronico</label>
                                 <i class='bx bxs-envelope' ></i>
                             </div>
                             <div class="input__box">
-                                <input type="text" required>
+                                <!---<input type="text" required>--->
+                                {{ form.IDUsuario }}
                                 <label>Nombre de usuario</label>
                                 <i class='bx bxs-user' ></i>
                             </div>
                             <div class="input__box">
-                                <input type="password" required>
+                                <!---<input type="password" required>--->
+                                {{ form.Password }}
                                 <label>Contraseña</label>
                                 <i class='bx bxs-lock-alt' ></i>
                             </div>
                             <div class="input__box">
-                                <input type="password" required>
+                                <!---<input type="password" required>--->
+                                {{ form.confirm_password }}
                                 <label>Confirmar contraseña</label>
                                 <i class='bx bxs-lock-alt' ></i>
                             </div>
-                            <button class="btn">Registrarse</button>
+                            <button class="btn" type="submit">Registrarse</button>
                             <div class="account__creation">
                                 <span>¿Ya tienes una cuenta? <a href="#" class="login__link">Inicia sesion</a></span>
                             </div>
