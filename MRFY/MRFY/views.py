@@ -24,10 +24,17 @@ def inicio(request):
 
     # Procesar etiquetas antes de pasarlas al template
     for recipe in recipes:
+    # Procesar etiquetas
         if recipe.Etiquetas:
             recipe.etiquetas_lista = recipe.Etiquetas.split(',')
         else:
             recipe.etiquetas_lista = []
+
+        # Procesar ingredientes
+        if recipe.Ingredientes:
+            recipe.ingredientes_lista = recipe.Ingredientes.split(',')
+        else:
+            recipe.ingredientes_lista = []
 
     context = {
         "recipes": recipes

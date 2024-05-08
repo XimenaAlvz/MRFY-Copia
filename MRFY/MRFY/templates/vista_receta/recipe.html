@@ -1,4 +1,5 @@
 {% load static %}
+{% load custom_filters %}
 
 <!DOCTYPE html>
 <html lang="es">
@@ -111,9 +112,7 @@
                 <div class="recipe__steps">
                     <h2>Ingredientes</h2>
                     <ul class="ingredients">
-                        <li><span>blank</span></li>
-                        <li><span>blank</span></li>
-                        <li><span>blank</span></li>
+                        <span class="tag">{{ receta.Ingredientes }}</span>
                     </ul>
                 </div>
 
@@ -143,15 +142,15 @@
                         </div>
                         <div class="item">
                             <p>Carbohidratos</p>
-                            <p class="ammount">000g</p>
+                            <p class="ammount">{{ receta.CarbHidratos }}</p>
                         </div>
                         <div class="item">
                             <p>Proteina</p>
-                            <p class="ammount">000g</p>
+                            <p class="ammount">{{ receta.Proteinas }}</p>
                         </div>
                         <div class="item">
                             <p>Grasa</p>
-                            <p class="ammount">000g</p>
+                            <p class="ammount">{{ receta.Grasas }}</p>
                         </div>
                     </div>
                 </div>
