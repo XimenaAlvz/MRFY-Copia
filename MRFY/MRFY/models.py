@@ -15,6 +15,7 @@ class Recipe(models.Model):
     Valoración = models.DecimalField(max_digits=3, decimal_places=1, null=True)
     TiempoPreparación = models.CharField(max_length=50, null=True)
     Ingredientes = models.TextField(null=True)
+    Imagen = models.TextField(null=True)
 
 class User(models.Model):
     IDUsuario = models.CharField(max_length=50, primary_key=True, unique=True)  # Clave primaria que coincide con la base de datos

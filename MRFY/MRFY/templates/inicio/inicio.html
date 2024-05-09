@@ -88,7 +88,7 @@
             <div class="recipe-card">
                 <a href="{% url 'recipe_detail' recipe.IDReceta %}">
                 <div class="recipe-image">
-                    <img src="{% static 'images/wallpaper4.jpg' %}" alt="Receta">
+                    <img src="{% static recipe.Imagen %}" alt="Receta">
                 </div>
                 <div class="recipe-content">
                     <h2 class="recipe-title">{{ recipe.Nombre }}</h2>
