@@ -114,8 +114,8 @@
                     <h2 class="recipe-title">{{ recipe.Nombre }}</h2>
                     <p class="recipe-description">{{ recipe.Comentarios }}</p>
                     <div class="recipe-tags">
-                        {% for tag in recipe.etiquetas_lista %}
-                            <span class="tag">{{ tag|custom_strip }}</span>
+                        {% for recipe_tag in recipe.recipetag_set.all %}
+                            <a href="{% url 'search' %}?q={{ recipe_tag.IDTag.Nombre }}" class="tag">{{ recipe_tag.IDTag.Nombre }}</a>
                         {% endfor %}
                     </div>
                 </div>

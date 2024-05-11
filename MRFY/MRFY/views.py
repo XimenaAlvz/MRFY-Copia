@@ -5,8 +5,9 @@ from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404
 from django.shortcuts import render, redirect
 from .forms import UserRegistrationForm
-from .models import Recipe
+from .models import Recipe, Tag, Ingredient, RecipeIngredient, RecipeTag
 from django.contrib import messages
+from django.db.models import Q
 import os
 
 def index(request):
@@ -24,16 +25,6 @@ def inicio(request):
     #return HttpResponse(plt.render(ctx))
 
     recipes = Recipe.objects.all()
-
-    # Procesar etiquetas antes de pasarlas al template
-    for recipe in recipes:
-    # Procesar etiquetas
-        if recipe.Etiquetas:
-            recipe.etiquetas_lista = recipe.Etiquetas.split(',')
-        else:
-            recipe.etiquetas_lista = []
-
-        # Procesar ingredientes
 
     context = {
         "recipes": recipes
@@ -70,11 +61,27 @@ def recipe(request, id_receta):
     #doc_ext.close()
     #ctx = Context()
     #return HttpResponse(plt.render(ctx))
+
     receta = get_object_or_404(Recipe, IDReceta=id_receta)  # Obtiene la receta por ID o devuelve 404 si no existe
-    return render(request, 'vista_receta/recipe.html', {'receta': receta})
+
+    context = {
+        "receta": receta,
+        "tags": receta.recipetag_set.all(),  # Obtener todas las relaciones RecipeTag asociadas a la receta
+        "ingredientes": receta.recipeingredient_set.all()  # Obtener todas las relaciones RecipeIngredient asociadas a la receta
+    }
+
+    return render(request, 'vista_receta/recipe.html', context)  # Renderiza el template con la receta
+    #return render(request, 'vista_receta/recipe.html', {'receta': receta})
 
 def search(request):
-    query = request.GET.get('q')  # Obtener el término de búsqueda de la URL
-    recipes = Recipe.objects.filter(Nombre__icontains=query) if query else []  # Filtrar recetas por el término de búsqueda
+    query = request.GET.get('q')
+    recipes = []
 
-    return render(request, 'search/search.html', {'recipes': recipes, 'query': query})  # Renderizar el template con los resultados de la búsqueda
+    if query:
+        # Filtrar recetas por el término de búsqueda en el nombre y en las etiquetas
+        recipes = Recipe.objects.filter(
+            Q(Nombre__icontains=query) |  # Buscar en el nombre de la receta
+            Q(Etiquetas__Nombre__icontains=query)  # Buscar en los nombres de las etiquetas asociadas a las recetas
+        ).distinct()
+
+    return render(request, 'search/search.html', {'recipes': recipes, 'query': query})

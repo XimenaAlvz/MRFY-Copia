@@ -48,7 +48,7 @@
 
         <div class="options__menu">
 
-            <a href="#" class="select">
+            <a href="/inicio" class="select">
                 <div class="option">
                     <i class='bx bx-home' title="Inicio"></i>
                     <!---<object data="{% static 'images/home-4-svgrepo-com.svg' %}" type="image/svg+xml" class="svg__icon" title="Inicio"></object>--->
@@ -116,8 +116,8 @@
                     <h2 class="recipe-title">{{ recipe.Nombre }}</h2>
                     <p class="recipe-description">{{ recipe.Comentarios }}</p>
                     <div class="recipe-tags">
-                        {% for tag in recipe.etiquetas_lista %}
-                            <span class="tag">{{ tag|custom_strip }}</span>
+                        {% for tag in recipe.Etiquetas.all %}
+                        <a href="{% url 'search' %}?q={{ tag.Nombre }}" class="tag">{{ tag.Nombre }}</a>
                         {% endfor %}
                     </div>
                 </div>

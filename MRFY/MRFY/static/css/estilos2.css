@@ -743,3 +743,44 @@ button:hover{
         padding-right: 20px;
     }
 }
+
+/* Tags interactivos*/
+
+.recipe-tags a:hover{
+    background: #d6d6d6;
+}
+
+.recipe__information .tags a{
+    text-decoration: none;
+    color: black;
+}
+
+.recipe__information .tags a:hover{
+    background: #d6d6d6;
+}
+
+/* Botones de interacción*/
+
+.recipe__information .interaction{
+    align-items: center;
+    align-content: center;
+}
+
+.recipe__information .interaction button{
+    border-radius: 5px;
+    padding: 3px;
+    margin: 5px;
+    transition: 300ms;
+}
+
+.recipe__information .interaction button:hover{
+    color: white;
+}
+
+.recipe__information .interaction .favorite__btn i{
+    transition: 300ms;
+}
+
+.recipe__information .interaction .favorite__btn:hover i{
+    color: gold;
+}
