@@ -1,14 +1,16 @@
 {% load static %}
+{% load custom_filters %}
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar sesion</title>
+    <title>Inicio</title>
     <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
     <link rel="stylesheet" href="{% static 'css/estilos2.css' %}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
 </head>
 <body id="body">
 
@@ -16,6 +18,16 @@
         <div class="icon__menu">
             <img src="{% static 'images/menu-alt-1-svgrepo-com.svg' %}" alt="icono" class="svg__icon" id="btn_open">
         </div>
+
+        <div class="search__box">
+            <form action="{% url 'search' %}" method="GET">
+                <input type="text" name="q" class="search__input" placeholder="Buscar receta...">
+                <button class="search__button" type="submit">
+                    <i class="bx bx-search-alt-2"></i>
+                </button>
+            </form>
+        </div>
+
         <div class="icon__login">
 
             <a href="#" class="login">
@@ -36,7 +48,7 @@
 
         <div class="options__menu">
 
-            <a href="/inicio">
+            <a href="#" class="select">
                 <div class="option">
                     <i class='bx bx-home' title="Inicio"></i>
                     <!---<object data="{% static 'images/home-4-svgrepo-com.svg' %}" type="image/svg+xml" class="svg__icon" title="Inicio"></object>--->
@@ -77,7 +89,7 @@
                 </div>
             </a>
 
-            <a href="/login" class="select">
+            <a href="/login">
                 <div class="option">
                     <i class='bx bx-log-in' title="Login"></i>
                     <!---<img src="{% static 'images/login-svgrepo-com.svg' %}" alt="" class="svg__icon" title="Iniciar sesion">--->
@@ -90,72 +102,35 @@
     </div>
 
     <main>
-        <div class="main__container" id="login__settings">
-                <div class="container">
-                    <div class="form__box">
-                        <form action="#" class="login__form">
-                            <h2>Iniciar sesion</h2>
-                            <div class="input__box">
-                                <input type="text" required>
-                                <label>Correo electronico</label>
-                                <i class='bx bxs-envelope' ></i>
-                            </div>
-                            <div class="input__box">
-                                <input type="password" required>
-                                <label>Contraseña</label>
-                                <i class='bx bxs-lock-alt' ></i>
-                            </div>
-                            <div class="forget__section">
-                                <p>
-                                    <input type="checkbox" name="" id="">
-                                    Recordarme
-                                </p>
-                                <a href="#">Olvide mi contraseña</a>
-                            </div>
-                            <button class="btn">Iniciar sesion</button>
-                            <div class="account__creation">
-                                <span>¿Necesitas una cuenta? <a href="#" class="register__link">Registrate</a></span>
-                            </div>
-                        </form>
-                        <form action="#" class="register__form" method="POST">
-                            {% csrf_token %}
-                            <h2>Registrarse</h2>
-                            <div class="input__box">
-                                <!---<input type="text" required>--->
-                                {{ form.Correo }}
-                                <label>Correo electronico</label>
-                                <i class='bx bxs-envelope' ></i>
-                            </div>
-                            <div class="input__box">
-                                <!---<input type="text" required>--->
-                                {{ form.IDUsuario }}
-                                <label>Nombre de usuario</label>
-                                <i class='bx bxs-user' ></i>
-                            </div>
-                            <div class="input__box">
-                                <!---<input type="password" required>--->
-                                {{ form.Password }}
-                                <label>Contraseña</label>
-                                <i class='bx bxs-lock-alt' ></i>
-                            </div>
-                            <div class="input__box">
-                                <!---<input type="password" required>--->
-                                {{ form.confirm_password }}
-                                <label>Confirmar contraseña</label>
-                                <i class='bx bxs-lock-alt' ></i>
-                            </div>
-                            <button class="btn" type="submit">Registrarse</button>
-                            <div class="account__creation">
-                                <span>¿Ya tienes una cuenta? <a href="#" class="login__link">Inicia sesion</a></span>
-                            </div>
-                        </form>
+
+        <h1>Resultados de Búsqueda para "{{ query }}"</h1>
+
+        <div class="main__container">
+            {% for recipe in recipes %}
+            <div class="recipe-card">
+                <a href="{% url 'recipe_detail' recipe.IDReceta %}">
+                <div class="recipe-image">
+                    <img src="{% static recipe.Imagen %}" alt="Receta">
+                </div>
+                <div class="recipe-content">
+                    <h2 class="recipe-title">{{ recipe.Nombre }}</h2>
+                    <p class="recipe-description">{{ recipe.Comentarios }}</p>
+                    <div class="recipe-tags">
+                        {% for tag in recipe.etiquetas_lista %}
+                            <span class="tag">{{ tag|custom_strip }}</span>
+                        {% endfor %}
                     </div>
                 </div>
+                </a>
+            </div>
+            {% endfor %}
         </div>
+
     </main>
+    
+    
 
 <script src="{% static 'js/display_menu.js' %}"></script>
-<script src="{% static 'js/switch_login.js' %}"></script>
-
+    
 </body>
 </html>

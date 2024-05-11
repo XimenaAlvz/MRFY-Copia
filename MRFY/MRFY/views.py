@@ -34,10 +34,6 @@ def inicio(request):
             recipe.etiquetas_lista = []
 
         # Procesar ingredientes
-        if recipe.Ingredientes:
-            recipe.ingredientes_lista = recipe.Ingredientes.split(',')
-        else:
-            recipe.ingredientes_lista = []
 
     context = {
         "recipes": recipes
@@ -76,3 +72,9 @@ def recipe(request, id_receta):
     #return HttpResponse(plt.render(ctx))
     receta = get_object_or_404(Recipe, IDReceta=id_receta)  # Obtiene la receta por ID o devuelve 404 si no existe
     return render(request, 'vista_receta/recipe.html', {'receta': receta})
+
+def search(request):
+    query = request.GET.get('q')  # Obtener el término de búsqueda de la URL
+    recipes = Recipe.objects.filter(Nombre__icontains=query) if query else []  # Filtrar recetas por el término de búsqueda
+
+    return render(request, 'search/search.html', {'recipes': recipes, 'query': query})  # Renderizar el template con los resultados de la búsqueda

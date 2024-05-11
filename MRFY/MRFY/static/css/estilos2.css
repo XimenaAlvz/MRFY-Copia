@@ -10,6 +10,12 @@
     height: 30px;
 }
 
+.options__menu .option i{
+    width: 30px;
+    height: 30px;
+    font-size: 30px;
+}
+
 .icon{
     width: 70px;
     height: 70px;
@@ -75,6 +81,13 @@ header{
 }
 
 .icon__menu .svg__icon{
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    position: absolute;
+}
+
+.icon__menu i{
     width: 40px;
     height: 40px;
     cursor: pointer;
@@ -154,6 +167,11 @@ header{
     cursor: pointer;
 }
 
+.icon__login .login i{
+    margin-right: 20px;
+    cursor: pointer;
+}
+
 .options__menu .option{
     padding: 20px 0px;
     display: flex;
@@ -162,6 +180,11 @@ header{
 }
 
 .options__menu .option .svg__icon{
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.options__menu .option i{
     margin-right: 20px;
     cursor: pointer;
 }
@@ -656,5 +679,67 @@ a.select{
 
     .container__recipe .recipe__img img{
         border-radius: 0;
+    }
+}
+
+/* Barra de bsuqueda*/
+
+.search__box{
+    position: relative;
+    padding-left: 450px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    font-size: 1rem;
+}
+
+.search__box i{
+    color: white;
+}
+
+.search__input{
+    padding: 10px;
+    padding-right: 150px;
+    border-radius: 5px 0 0 5px;
+    border: 0;
+    outline: none;
+}
+
+.search__box button{
+    background-color: #11445e;
+    padding: 10px 15px;
+    position: absolute;
+    border: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    transition: 300ms;
+}
+
+button:hover{
+    background-color: #175f82;
+}
+
+@media screen and (max-width: 760px){
+    .search__box{
+        padding-left: 25px;
+    }
+
+    .search__input{
+        padding-right: 20px;
+    }
+}
+
+@media screen and (max-width: 540px){
+    .search__box{
+        padding-left: 25px;
+    }
+
+    .search__input{
+        padding-right: 20px;
     }
 }

@@ -17,7 +17,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
-from MRFY.views import index, inicio, recipe, register_user
+from MRFY.views import index, inicio, recipe, register_user, search
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,4 +27,5 @@ urlpatterns = [
     #path('login/', login),
     path('login/', register_user, name='register_user'),
     path('recipe/<int:id_receta>/', recipe, name='recipe_detail'),
+    path('search/', search, name='search'),
 ]
