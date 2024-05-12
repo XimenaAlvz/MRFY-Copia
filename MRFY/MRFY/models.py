@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserManager
 from django.db import models
 from django.utils import timezone
+from django.conf import settings
 
 # Create your models here.
 
@@ -12,11 +13,9 @@ class Recipe(models.Model):
     Proteinas = models.CharField(max_length=50, null=True)
     Grasas = models.CharField(max_length=50, null=True)
     Instrucciones = models.TextField(null=True)
-    #Etiquetas = models.CharField(max_length=100, null=True)
     Comentarios = models.TextField(null=True)
     Valoración = models.DecimalField(max_digits=3, decimal_places=1, null=True)
     TiempoPreparación = models.CharField(max_length=50, null=True)
-    #Ingredientes = models.TextField(null=True)
     Imagen = models.TextField(default='images/wallpaper4.jpg')
     Etiquetas = models.ManyToManyField('Tag', through='RecipeTag')
     Ingredientes = models.ManyToManyField('Ingredient', through='RecipeIngredient')
@@ -88,3 +87,19 @@ class RecipeTag(models.Model):
 
     def __str__(self):
         return self.name
+    
+class ShoppingList(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='shopping_list')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Shopping List of {self.user.email}'
+
+class ShoppingListItem(models.Model):
+    shopping_list = models.ForeignKey(ShoppingList, on_delete=models.CASCADE, related_name='items')
+    name = models.CharField(max_length=100)
+    quantity = models.CharField(max_length=50)
+    unit = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f'{self.name} ({self.quantity} {self.unit})'

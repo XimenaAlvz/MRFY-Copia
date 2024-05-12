@@ -74,7 +74,11 @@
                 </div>
             </a>
 
+            {% if user.is_authenticated %}
             <a href="/lista">
+            {% else %}
+            <a href="/login">
+            {% endif %}
                 <div class="option">
                     <i class='bx bx-cart' title="Lista de compras"></i>
                     <!---<img src="{% static 'images/shopping-cart-8-svgrepo-com.svg' %}" alt="" class="svg__icon" title="Lista de compras">--->
@@ -135,9 +139,12 @@
                         <button class="favorite__btn">
                             <i class='bx bxs-star' ></i> Agregar a favoritos
                         </button>
-                        <button class="shopping-list__btn">
-                            <i class='bx bx-notepad'></i> Agregar a lista de compras
-                        </button>
+                        <form action="{% url 'add_to_shopping_list' receta.IDReceta %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="shopping-list__btn">
+                                <i class='bx bx-notepad'></i> Agregar a lista de compras
+                            </button>
+                        </form>
                     </div>
 
                     <hr>

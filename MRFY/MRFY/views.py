@@ -10,6 +10,8 @@ from django.contrib import messages
 from django.db.models import Q
 from django.contrib.auth.forms import UserCreationForm
 from .models import User
+from django.http import JsonResponse
+from .models import ShoppingList, ShoppingListItem
 import os
 
 def index(request):
@@ -109,4 +111,38 @@ def search(request):
     return render(request, 'search/search.html', {'recipes': recipes, 'query': query, 'user': request.user})
 
 def lista_compras(request):
-    return render(request, 'lista_compras/lista.html')
+    # Obtener la lista de compras del usuario autenticado
+    shopping_list, created = ShoppingList.objects.get_or_create(user=request.user)
+
+    # Obtener los elementos de la lista de compras ordenados por ID de ingrediente
+    items = shopping_list.items.all().order_by('name')
+
+    context = {
+        'items': items
+    }
+
+    return render(request, 'lista_compras/lista.html', context)
+
+
+def add_to_shopping_list(request, recipe_id):
+    if request.method == 'POST':
+        # Obtener la receta correspondiente
+        recipe = get_object_or_404(Recipe, pk=recipe_id)
+
+        # Obtener la lista de compras del usuario autenticado
+        shopping_list, created = ShoppingList.objects.get_or_create(user=request.user)
+
+        # Agregar los ingredientes de la receta a la lista de compras
+        for recipe_ingredient in recipe.recipeingredient_set.all():
+            ShoppingListItem.objects.create(
+                shopping_list=shopping_list,
+                name=recipe_ingredient.IDIngrediente.Nombre,
+                quantity=recipe_ingredient.Cantidad,
+                unit=recipe_ingredient.Unidad if recipe_ingredient.Unidad else ''  # Proporcionar un valor predeterminado si Unidad es None
+            )
+
+        # Redirigir al usuario a su lista de compras
+        return redirect('lista_compras')
+
+    # Manejar cualquier otro método de solicitud
+    return HttpResponseNotAllowed(['POST'])

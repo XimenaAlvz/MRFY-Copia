@@ -61,7 +61,11 @@
                 </div>
             </a>
 
+            {% if user.is_authenticated %}
             <a href="/lista">
+            {% else %}
+            <a href="/login">
+            {% endif %}
                 <div class="option">
                     <i class='bx bx-cart' title="Lista de compras"></i>
                     <!---<img src="{% static 'images/shopping-cart-8-svgrepo-com.svg' %}" alt="" class="svg__icon" title="Lista de compras">--->

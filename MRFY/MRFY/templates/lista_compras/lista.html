@@ -119,40 +119,23 @@
         <div class="main__container">
             <div class="shopping-list">
                 <div class="deadline">
-                    <p class="deadline__text">Esta lista se reiniciará en... X dias.</p>
+                    <h1>Lista de Compras</h1>
                 </div>
-                <h1>Lista de Compras</h1>
                 <hr>
+
+                {% for item in items %}
                 <ul>
                     <li>
                         <div class="ingredient">
-                            <span class="name">Huevos</span>
+                            <span class="name">{{ item.name }}</span>
                             <div class="quantity-unit">
-                                <span class="quantity">12</span>
-                                <span class="unit">unidades</span>
+                                <span class="quantity">{{ item.quantity }}</span>
+                                <span class="unit">{{ item.unit }}</span>
                             </div>
                         </div>
                     </li>
                     <hr>
-                    <li>
-                        <div class="ingredient">
-                            <span class="name">Leche</span>
-                            <div class="quantity-unit">
-                                <span class="quantity">1</span>
-                                <span class="unit">litro</span>
-                            </div>
-                        </div>
-                    </li>
-                    <hr>
-                    <li>
-                        <div class="ingredient">
-                            <span class="name">Harina</span>
-                            <div class="quantity-unit">
-                                <span class="quantity">2</span>
-                                <span class="unit">kilogramos</span>
-                            </div>
-                        </div>
-                    </li>
+                    {% endfor %}
                     <!-- Agrega más ingredientes aquí -->
                 </ul>
             </div>
