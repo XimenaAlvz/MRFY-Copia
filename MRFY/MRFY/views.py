@@ -107,3 +107,6 @@ def search(request):
         ).distinct()
 
     return render(request, 'search/search.html', {'recipes': recipes, 'query': query, 'user': request.user})
+
+def lista_compras(request):
+    return render(request, 'lista_compras/lista.html')

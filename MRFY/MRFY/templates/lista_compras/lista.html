@@ -48,7 +48,7 @@
 
         <div class="options__menu">
 
-            <a href="/inicio" class="select">
+            <a href="/inicio">
                 <div class="option">
                     <i class='bx bx-home' title="Inicio"></i>
                     <!---<object data="{% static 'images/home-4-svgrepo-com.svg' %}" type="image/svg+xml" class="svg__icon" title="Inicio"></object>--->
@@ -73,7 +73,7 @@
                 </div>
             </a>
 
-            <a href="/lista">
+            <a href="/lista" class="select">
                 <div class="option">
                     <i class='bx bx-cart' title="Lista de compras"></i>
                     <!---<img src="{% static 'images/shopping-cart-8-svgrepo-com.svg' %}" alt="" class="svg__icon" title="Lista de compras">--->
@@ -116,30 +116,47 @@
     </div>
 
     <main>
-
-        <h1>Resultados de Búsqueda para "{{ query }}"</h1>
-
         <div class="main__container">
-            {% for recipe in recipes %}
-            <div class="recipe-card">
-                <a href="{% url 'recipe_detail' recipe.IDReceta %}">
-                <div class="recipe-image">
-                    <img src="{% static recipe.Imagen %}" alt="Receta">
+            <div class="shopping-list">
+                <div class="deadline">
+                    <p class="deadline__text">Esta lista se reiniciará en... X dias.</p>
                 </div>
-                <div class="recipe-content">
-                    <h2 class="recipe-title">{{ recipe.Nombre }}</h2>
-                    <p class="recipe-description">{{ recipe.Comentarios }}</p>
-                    <div class="recipe-tags">
-                        {% for tag in recipe.Etiquetas.all %}
-                        <a href="{% url 'search' %}?q={{ tag.Nombre }}" class="tag">{{ tag.Nombre }}</a>
-                        {% endfor %}
-                    </div>
-                </div>
-                </a>
+                <h1>Lista de Compras</h1>
+                <hr>
+                <ul>
+                    <li>
+                        <div class="ingredient">
+                            <span class="name">Huevos</span>
+                            <div class="quantity-unit">
+                                <span class="quantity">12</span>
+                                <span class="unit">unidades</span>
+                            </div>
+                        </div>
+                    </li>
+                    <hr>
+                    <li>
+                        <div class="ingredient">
+                            <span class="name">Leche</span>
+                            <div class="quantity-unit">
+                                <span class="quantity">1</span>
+                                <span class="unit">litro</span>
+                            </div>
+                        </div>
+                    </li>
+                    <hr>
+                    <li>
+                        <div class="ingredient">
+                            <span class="name">Harina</span>
+                            <div class="quantity-unit">
+                                <span class="quantity">2</span>
+                                <span class="unit">kilogramos</span>
+                            </div>
+                        </div>
+                    </li>
+                    <!-- Agrega más ingredientes aquí -->
+                </ul>
             </div>
-            {% endfor %}
         </div>
-
     </main>
     
     
