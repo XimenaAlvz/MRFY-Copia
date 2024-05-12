@@ -8,10 +8,12 @@ from django.contrib.auth import authenticate, login, logout
 from .models import Recipe, Tag, Ingredient, RecipeIngredient, RecipeTag
 from django.contrib import messages
 from django.db.models import Q
+from django.db.models import F
 from django.contrib.auth.forms import UserCreationForm
 from .models import User
 from django.http import JsonResponse
 from .models import ShoppingList, ShoppingListItem
+from decimal import Decimal
 import os
 
 def index(request):
@@ -51,8 +53,8 @@ def register_user(request):
         # Crear un nuevo usuario
         User.objects.create_user(email=email, name=name, password=password1)
         
-        # Redirigir a alguna página después del registro exitoso
-        return redirect('login')  # Cambia 'index' a la URL de la página a la que quieres redirigir
+        # Redirigir después del registro exitoso
+        return redirect('login')
         
     return render(request, 'login_registro/form.html')
 
@@ -70,7 +72,7 @@ def login_user(request):
             login(request, user)
             
             # Redirigir a alguna página después del inicio de sesión exitoso
-            return redirect('inicio')  # Cambia 'index' a la URL de la página a la que quieres redirigir
+            return redirect('inicio')
             
         else:
             # Mostrar un mensaje de error si las credenciales son incorrectas
@@ -125,24 +127,35 @@ def lista_compras(request):
 
 
 def add_to_shopping_list(request, recipe_id):
-    if request.method == 'POST':
-        # Obtener la receta correspondiente
-        recipe = get_object_or_404(Recipe, pk=recipe_id)
+    recipe = get_object_or_404(Recipe, pk=recipe_id)
 
-        # Obtener la lista de compras del usuario autenticado
-        shopping_list, created = ShoppingList.objects.get_or_create(user=request.user)
+    # Obtener la lista de compras del usuario autenticado
+    shopping_list, created = ShoppingList.objects.get_or_create(user=request.user)
 
-        # Agregar los ingredientes de la receta a la lista de compras
-        for recipe_ingredient in recipe.recipeingredient_set.all():
+    # Iterar sobre los ingredientes de la receta
+    for recipe_ingredient in recipe.recipeingredient_set.all():
+        # Verificar si el ingrediente ya está en la lista de compras
+        existing_item = shopping_list.items.filter(name=recipe_ingredient.IDIngrediente.Nombre).first()
+
+        # Si ya existe, sumar la cantidad al elemento existente
+        if existing_item:
+            existing_item.quantity = F('quantity') + recipe_ingredient.Cantidad
+            existing_item.save()
+        # Si no existe, crear un nuevo elemento en la lista de compras
+        else:
             ShoppingListItem.objects.create(
                 shopping_list=shopping_list,
                 name=recipe_ingredient.IDIngrediente.Nombre,
                 quantity=recipe_ingredient.Cantidad,
-                unit=recipe_ingredient.Unidad if recipe_ingredient.Unidad else ''  # Proporcionar un valor predeterminado si Unidad es None
+                unit=recipe_ingredient.Unidad
             )
 
-        # Redirigir al usuario a su lista de compras
-        return redirect('lista_compras')
+    return redirect('lista_compras')
 
-    # Manejar cualquier otro método de solicitud
-    return HttpResponseNotAllowed(['POST'])
+def clear_shopping_list(request):
+    # Obtener la lista de compras del usuario autenticado
+    shopping_list = request.user.shopping_list
+    # Vaciar la lista de compras
+    shopping_list.clear_items()
+    # Redirigir a la página de lista de compras
+    return redirect('lista_compras')

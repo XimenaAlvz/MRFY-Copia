@@ -857,3 +857,23 @@ button:hover{
     border-radius: 15px;
     padding: 15px;
 }
+
+.shopping-list .clear{
+    padding: 5px;
+    display: flex;
+    border-radius: 15px;
+    justify-content: space-between;
+    align-items: center;
+    margin: 15px;
+    margin-left: auto;
+    transition: 300ms;
+    cursor: pointer;
+}
+
+.shopping-list .clear i{
+    padding: 5px;
+}
+
+.shopping-list button:hover{
+    color: white;
+}

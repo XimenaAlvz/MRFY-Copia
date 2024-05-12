@@ -74,7 +74,7 @@ class Ingredient(models.Model):
 class RecipeIngredient(models.Model):
     IDReceta = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     IDIngrediente = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
-    Cantidad = models.CharField(max_length=50, null=True)
+    Cantidad = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     Unidad = models.CharField(max_length=50, null=True)
 
 class Tag(models.Model):
@@ -94,12 +94,15 @@ class ShoppingList(models.Model):
 
     def __str__(self):
         return f'Shopping List of {self.user.email}'
+    
+    def clear_items(self):
+        self.items.all().delete()
 
 class ShoppingListItem(models.Model):
     shopping_list = models.ForeignKey(ShoppingList, on_delete=models.CASCADE, related_name='items')
     name = models.CharField(max_length=100)
-    quantity = models.CharField(max_length=50)
-    unit = models.CharField(max_length=50)
+    quantity = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    unit = models.CharField(max_length=50, null=True)
 
     def __str__(self):
         return f'{self.name} ({self.quantity} {self.unit})'

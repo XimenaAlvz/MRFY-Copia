@@ -121,6 +121,12 @@
                 <div class="deadline">
                     <h1>Lista de Compras</h1>
                 </div>
+                <form action="{% url 'clear_shopping_list' %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="clear">
+                        <i class='bx bx-trash'></i> Eliminar lista de compras
+                    </button>
+                </form>
                 <hr>
 
                 {% for item in items %}
