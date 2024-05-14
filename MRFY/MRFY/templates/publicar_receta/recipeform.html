@@ -10,6 +10,11 @@
     <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
     <link rel="stylesheet" href="{% static 'css/estilos2.css' %}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/
+    ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=REM&
+    display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
 </head>
 <body id="body">
@@ -57,7 +62,7 @@
                 </div>
             </a>
 
-            <a href="/recipeform">
+            <a href="#">
                 <div class="option">
                     <i class='bx bx-add-to-queue' title="Subir receta"></i>
                     <!---<img src="{% static 'images/add-ellipse-svgrepo-com.svg' %}" alt="" class="svg__icon" title="Subir receta">--->
@@ -120,38 +125,28 @@
     </div>
 
     <main>
-
         <div class="main__container">
-            {% for recipe in recipes %}
-            <div class="recipe-card">
-                <a href="{% url 'recipe_detail' recipe.IDReceta %}">
-                <div class="recipe-image">
-                    <img src="{% static recipe.Imagen %}" alt="Receta">
-                </div>
-                <div class="recipe-content">
-                    <h2 class="recipe-title">{{ recipe.Nombre }}</h2>
-                    <p class="recipe-description">{{ recipe.Comentarios }}</p>
-                    <div class="recipe-tags">
-                        {% for recipe_tag in recipe.recipetag_set.all %}
-                            <a href="{% url 'search' %}?q={{ recipe_tag.IDTag.Nombre }}" class="tag">{{ recipe_tag.IDTag.Nombre }}</a>
-                        {% endfor %}
-                    </div>
-                </div>
-                </a>
+            <div class="form__container">
+                <h1>Publicar Receta</h1>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="submit__btn">Publicar</button>
+                </form>
             </div>
-            {% endfor %}
         </div>
-        <form action="{% url 'brew_coffee' %}" method="POST">
-            {% csrf_token %}
-            <input type="hidden" name="http_method" value="BREW">
-            <button type="submit" class="brew"><i class='bx bx-coffee'></i></button>
-        </form>
-        
     </main>
     
     
 
 <script src="{% static 'js/display_menu.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.django-select2').select2();
+    });
+</script>
     
 </body>
 </html>

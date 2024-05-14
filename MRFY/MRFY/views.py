@@ -11,9 +11,11 @@ from django.db.models import Q
 from django.db.models import F
 from django.contrib.auth.forms import UserCreationForm
 from .models import User
+from .forms import RecipeForm
 from django.http import JsonResponse
 from .models import ShoppingList, ShoppingListItem
 from decimal import Decimal
+from django.contrib.auth.decorators import login_required
 import os
 
 def index(request):
@@ -201,3 +203,36 @@ def delete_item(request, item_id):
         item.delete()
         return JsonResponse({'status': 'success'})
     return JsonResponse({'status': 'fail'}, status=400)
+
+def publicar_receta(request):
+    if request.method == 'POST':
+        form = RecipeForm(request.POST, request.FILES)
+        if form.is_valid():
+            receta = form.save(commit=False)
+            receta.Autor = request.user
+            receta.save()
+            
+            ingredientes = form.cleaned_data['Ingredientes']
+            cantidad = form.cleaned_data['Cantidad']
+            unidad = form.cleaned_data['Unidad']
+            
+            for ingrediente in ingredientes:
+                RecipeIngredient.objects.create(
+                    IDReceta=receta,
+                    IDIngrediente=ingrediente,
+                    Cantidad=cantidad,
+                    Unidad=unidad
+                )
+            
+            return redirect('inicio')
+    else:
+        form = RecipeForm()
+    return render(request, 'publicar_receta/recipeform.html', {'form': form})
+
+def brew_coffee(request):
+    if getattr(request, 'brew_method', False):
+        return redirect('teapot')
+    return HttpResponse("This is not a coffee machine.", status=400)
+
+def teapot_view(request):
+    return render(request, 'errors/418.html', status=418)

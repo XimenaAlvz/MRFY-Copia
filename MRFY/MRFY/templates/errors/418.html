@@ -1,0 +1,26 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>418 I'm a teapot</title>
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/estilos2.css' %}">
+</head>
+<body>
+    <div class="teapot__container">
+        <div class="teapot">
+            <img src="{% static 'images/teapot.png' %}" alt="">
+        </div>
+        <div class="teapot__info">
+            <a href="/inicio">
+                <img src="{% static 'images/icon.png' %}" alt="">
+            </a>
+            <h1>418 I'm a teapot</h1>
+            <p>The server refuses to brew coffee because it is a teapot.</p>
+        </div>
+    </div>
+</body>
+</html>

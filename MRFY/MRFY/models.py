@@ -7,6 +7,8 @@ from django.conf import settings
 
 class Recipe(models.Model):
     IDReceta = models.AutoField(primary_key=True, unique=True)  # Clave primaria que coincide con la base de datos
+    Autor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=False)
+    FechaCreación = models.DateTimeField(auto_now_add=True)
     Nombre = models.CharField(max_length=100, null=False)
     Calorias = models.CharField(max_length=50, null=True)
     CarbHidratos = models.CharField(max_length=50, null=True)
@@ -71,6 +73,9 @@ class Ingredient(models.Model):
     IDIngrediente = models.AutoField(primary_key=True, unique=True)  # Clave primaria que coincide con la base de datos 
     Nombre = models.CharField(max_length=100, null=False)
 
+    def __str__(self):
+        return self.Nombre
+
 class RecipeIngredient(models.Model):
     IDReceta = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     IDIngrediente = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
@@ -80,6 +85,9 @@ class RecipeIngredient(models.Model):
 class Tag(models.Model):
     IDTag = models.AutoField(primary_key=True, unique=True)  # Clave primaria que coincide con la base de datos
     Nombre = models.CharField(max_length=100, null=False)
+
+    def __str__(self):
+        return self.Nombre
 
 class RecipeTag(models.Model):
     IDReceta = models.ForeignKey(Recipe, on_delete=models.CASCADE)
