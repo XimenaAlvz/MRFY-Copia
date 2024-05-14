@@ -5,6 +5,10 @@
     font-family: "Roboto", sans-serif;
 }
 
+.hidden {
+    display: none;
+}
+
 .svg__icon{
     width: 30px;
     height: 30px;
@@ -744,7 +748,7 @@ button:hover{
     }
 }
 
-/* Tags interactivos*/
+/* Tags interactivos receta*/
 
 .recipe-tags a:hover{
     background: #d6d6d6;
@@ -759,11 +763,12 @@ button:hover{
     background: #d6d6d6;
 }
 
-/* Botones de interacción*/
+/* Botones de interacción receta*/
 
 .recipe__information .interaction{
     align-items: center;
     align-content: center;
+    display: flex;
 }
 
 .recipe__information .interaction button{
@@ -784,6 +789,28 @@ button:hover{
 
 .recipe__information .interaction .favorite__btn:hover i{
     color: gold;
+}
+
+.recipe__information .userpub__opts{
+    align-items: center;
+    align-content: center;
+    display: flex;
+}
+
+.recipe__information .userpub__opts button{
+    border-radius: 5px;
+    padding: 3px;
+    margin: 5px;
+    transition: 300ms;
+    cursor: pointer;
+}
+
+.recipe__information .userpub__opts button:hover{
+    color: white;
+}
+
+.recipe__information .userpub__opts .delete__btn:hover{
+    background-color: crimson;
 }
 
 /* Lista de compras */
@@ -821,6 +848,24 @@ button:hover{
     border-bottom: none;
 }
 
+.shopping-list .ingredient input{
+    border-radius: 10px;
+    max-width: 70px;
+    margin-right: 10px;
+}
+
+.shopping-list .ingredient .delete-ingredient__btn{
+    margin-left: 10px;
+    padding: 2px;
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+}
+
+.shopping-list .ingredient .delete-ingredient__btn:hover{
+    background-color: crimson;
+}
+
 .shopping-list .name {
     font-weight: bold;
     padding-top: 10px;
@@ -836,6 +881,7 @@ button:hover{
     width: 50px;
     text-align: right;
     padding-right: 10px;
+    margin-right: 5px;
 }
 
 .shopping-list .quantity,
@@ -858,6 +904,14 @@ button:hover{
     padding: 15px;
 }
 
+.options_shoppinglist{
+    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin-bottom: 10px;
+}
+
 .shopping-list .clear{
     padding: 5px;
     display: flex;
@@ -865,7 +919,7 @@ button:hover{
     justify-content: space-between;
     align-items: center;
     margin: 15px;
-    margin-left: auto;
+    /*margin-left: auto;*/
     transition: 300ms;
     cursor: pointer;
 }
@@ -876,4 +930,8 @@ button:hover{
 
 .shopping-list button:hover{
     color: white;
+}
+
+.shopping-list .options_shoppinglist #delete-list__btn:hover{
+    background-color: crimson;
 }

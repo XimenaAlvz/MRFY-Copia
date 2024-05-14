@@ -121,33 +121,42 @@
                 <div class="deadline">
                     <h1>Lista de Compras</h1>
                 </div>
-                    <div class="options_shoppinglist">
-                        <button type="submit" class="clear">
-                            <i class='bx bx-calendar' ></i> Recetario semanal
-                        </button>
-                        <form action="{% url 'lista_edit' %}" method="POST">
-                        {% csrf_token %}
-                            <button type="submit" class="clear">
-                                <i class='bx bx-edit-alt'></i> Editar lista de compras
-                            </button>
-                        </form>
-                    </div>
-                <hr>
 
+                <div class="options_shoppinglist">
+                    <form action="{% url 'clear_shopping_list' %}" method="POST">
+                    {% csrf_token %}
+                        <button type="submit" class="clear" id="delete-list__btn">
+                            <i class='bx bx-trash' ></i> Eliminar lista de compras
+                        </button>
+                    </form>
+
+                <form action="{% url 'guardar_cambios_lista' %}" method="POST">
+
+                {% csrf_token %}
+                    <button type="submit" class="clear">
+                        <i class='bx bx-save' ></i> Confirmar cambios
+                    </button>
+                </div>
+                <hr>
                 {% for item in items %}
                 <ul>
                     <li>
                         <div class="ingredient">
                             <span class="name">{{ item.name }}</span>
                             <div class="quantity-unit">
-                                <span class="quantity {% if not item.quantity %}hidden{% endif %}">{{ item.quantity }}</span>
+                                <!---<span class="quantity">{{ item.quantity }}</span>--->
+                                <input type="number" name="{{ item.id }}" value="{{ item.quantity }}">
                                 <span class="unit {% if not item.unit %}hidden{% endif %}">{{ item.unit }}</span>
+                                <button type="button" class="delete-ingredient__btn" data-id="{{ item.id }}">
+                                    <i class='bx bx-x' ></i>
+                                </button>
                             </div>
                         </div>
                     </li>
                     <hr>
                     {% endfor %}
                 </ul>
+                </form>
             </div>
         </div>
     </main>
@@ -155,6 +164,7 @@
     
 
 <script src="{% static 'js/display_menu.js' %}"></script>
+<script src="{% static 'js/delete_item.js' %}"></script>
     
 </body>
 </html>

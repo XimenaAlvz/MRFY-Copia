@@ -142,9 +142,20 @@
                         <form action="{% url 'add_to_shopping_list' receta.IDReceta %}" method="POST">
                             {% csrf_token %}
                             <button type="submit" class="shopping-list__btn">
-                                <i class='bx bx-notepad'></i> Agregar a lista de compras
+                                <i class='bx bx-cart'></i> Agregar a lista de compras
                             </button>
                         </form>
+                        <button class="recetario__btn">
+                            <i class='bx bx-calendar' ></i> Agregar a recetario semanal
+                        </button>
+                    </div>
+                    <div class="userpub__opts">
+                        <button class="edit__btn">
+                            <i class='bx bx-edit-alt'></i> Editar receta
+                        </button>
+                        <button class="delete__btn">
+                            <i class='bx bx-trash' ></i> Eliminar publicación
+                        </button>
                     </div>
 
                     <hr>
@@ -175,7 +186,9 @@
                     <h2>Ingredientes</h2>
                     {% for ingrediente in ingredientes %}
                         <ul class="ingredients">
-                                <span class="tag">{{ ingrediente.IDIngrediente.Nombre }} - {{ ingrediente.Cantidad }} {{ ingrediente.Unidad }}</span>
+                                <span class="tag">{{ ingrediente.IDIngrediente.Nombre }}</span>
+                                <span class="tag {% if not ingrediente.Cantidad %}hidden{% endif %}">{{ ingrediente.Cantidad }}</span>
+                                <span class="tag {% if not ingrediente.Unidad %}hidden{% endif %}">{{ ingrediente.Unidad }}</span>
                         </ul>
                     {% endfor %}
                 </div>

@@ -74,7 +74,7 @@ class Ingredient(models.Model):
 class RecipeIngredient(models.Model):
     IDReceta = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     IDIngrediente = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
-    Cantidad = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    Cantidad = models.DecimalField(max_digits=10, decimal_places=2, null=True, default=None)
     Unidad = models.CharField(max_length=50, null=True)
 
 class Tag(models.Model):
@@ -100,7 +100,8 @@ class ShoppingList(models.Model):
 
 class ShoppingListItem(models.Model):
     shopping_list = models.ForeignKey(ShoppingList, on_delete=models.CASCADE, related_name='items')
-    name = models.CharField(max_length=100)
+    IDIngrediente = models.ForeignKey(Ingredient, on_delete=models.CASCADE, default='')
+    name = models.CharField(max_length=100, null=False)
     quantity = models.DecimalField(max_digits=10, decimal_places=2, null=True)
     unit = models.CharField(max_length=50, null=True)
 

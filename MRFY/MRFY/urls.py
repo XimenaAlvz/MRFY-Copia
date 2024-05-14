@@ -17,7 +17,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
-from MRFY.views import index, inicio, recipe, search, register_user, login_user, logout_user, lista_compras, add_to_shopping_list, clear_shopping_list
+from MRFY.views import index, inicio, recipe, search, register_user, login_user, logout_user, lista_compras, add_to_shopping_list, clear_shopping_list, lista_edit, guardar_cambios_lista, delete_item
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,5 +32,8 @@ urlpatterns = [
     path('lista/', lista_compras, name='lista_compras'),
     path('add_to_shopping_list/<int:recipe_id>/', add_to_shopping_list, name='add_to_shopping_list'),
     path('clear_shopping_list/', clear_shopping_list, name='clear_shopping_list'),
+    path('guardar_cambios_lista/', guardar_cambios_lista, name='guardar_cambios_lista'),
+    path('list_edit/', lista_edit, name='lista_edit'),
+    path('delete_item/<int:item_id>/', delete_item, name='delete_item'),
     
 ]

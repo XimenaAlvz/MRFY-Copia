@@ -134,22 +134,57 @@ def add_to_shopping_list(request, recipe_id):
 
     # Iterar sobre los ingredientes de la receta
     for recipe_ingredient in recipe.recipeingredient_set.all():
-        # Verificar si el ingrediente ya está en la lista de compras
-        existing_item = shopping_list.items.filter(name=recipe_ingredient.IDIngrediente.Nombre).first()
+        # Verificar si el ingrediente ya existe en la lista de compras
+        existing_item = shopping_list.items.filter(IDIngrediente=recipe_ingredient.IDIngrediente).first()
 
-        # Si ya existe, sumar la cantidad al elemento existente
+        # Si el ingrediente ya está en la lista de compras, sumar la cantidad
         if existing_item:
-            existing_item.quantity = F('quantity') + recipe_ingredient.Cantidad
-            existing_item.save()
-        # Si no existe, crear un nuevo elemento en la lista de compras
+            if existing_item.quantity is not None and recipe_ingredient.Cantidad is not None:
+                existing_item.quantity += recipe_ingredient.Cantidad
+                existing_item.save()
+        # Si el ingrediente no está en la lista de compras, agregarlo
         else:
+            # Crear un nuevo elemento en la lista de compras
             ShoppingListItem.objects.create(
                 shopping_list=shopping_list,
-                name=recipe_ingredient.IDIngrediente.Nombre,
+                IDIngrediente=recipe_ingredient.IDIngrediente,
                 quantity=recipe_ingredient.Cantidad,
-                unit=recipe_ingredient.Unidad
+                unit=recipe_ingredient.Unidad,
+                name=recipe_ingredient.IDIngrediente.Nombre
             )
 
+    return redirect('lista_compras')
+
+def lista_edit(request):
+    # Obtener la lista de compras del usuario autenticado
+    shopping_list = ShoppingList.objects.get(user=request.user)
+    
+    # Obtener todos los elementos de la lista de compras
+    items = shopping_list.items.all().order_by('name')
+    
+    context = {
+        'items': items
+    }
+    
+    return render(request, 'lista_compras/lista_edit.html', context)
+
+def guardar_cambios_lista(request):
+    if request.method == 'POST':
+        # Obtener la lista de compras del usuario autenticado
+        shopping_list = ShoppingList.objects.get(user=request.user)
+        
+        # Iterar sobre los elementos de la lista de compras
+        for item in shopping_list.items.all():
+            # Obtener el nuevo valor de la cantidad desde el formulario
+            new_quantity = request.POST.get(str(item.id), None)
+            # Actualizar la cantidad si se proporcionó un nuevo valor
+            if new_quantity is not None:
+
+                if new_quantity == '':
+                    new_quantity = None
+                item.quantity = new_quantity
+                item.save()
+    
     return redirect('lista_compras')
 
 def clear_shopping_list(request):
@@ -159,3 +194,10 @@ def clear_shopping_list(request):
     shopping_list.clear_items()
     # Redirigir a la página de lista de compras
     return redirect('lista_compras')
+
+def delete_item(request, item_id):
+    if request.method == 'POST':
+        item = get_object_or_404(ShoppingListItem, id=item_id)
+        item.delete()
+        return JsonResponse({'status': 'success'})
+    return JsonResponse({'status': 'fail'}, status=400)
