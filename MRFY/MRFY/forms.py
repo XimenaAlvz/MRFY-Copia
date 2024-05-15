@@ -26,9 +26,9 @@ UNIDADES_CHOICES = [
 ]
 
 class RecipeForm(forms.ModelForm):
-    Ingredientes = forms.ModelMultipleChoiceField(
+    Ingredientes = forms.ModelChoiceField(
         queryset=Ingredient.objects.all(),
-        widget=Select2Widget,
+        widget=Select2Widget(attrs={'class': 'hidden'}),
         required=True
     )
     Cantidad = forms.DecimalField(max_digits=10, decimal_places=2, required=False)

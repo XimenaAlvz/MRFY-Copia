@@ -958,7 +958,7 @@ button:hover{
     box-shadow: 0 0 5px rgba(0, 0, 0, .2), 0 0 15px rgba(0, 0, 0, .2), 0 0 30px rgba(0, 0, 0, .2);
 }
 
-.form-container h2 {
+.form-container h1 {
     text-align: center;
     margin-bottom: 20px;
     color: #333;
@@ -974,30 +974,37 @@ button:hover{
     color: #555;
 }
 
-.form-group input[type="text"],
-.form-group input[type="number"],
-.form-group input[type="file"],
-.form-group textarea {
+.form-container input[type="text"],
+.form-container input[type="number"],
+.form-container input[type="file"],
+.form-container textarea,
+.form-container select {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
-.form-group textarea {
+.form-container textarea {
     resize: vertical;
 }
 
-.form-group button{
-    padding: 7px;
+.form-container .ingredient-field button{
+    padding: 2px;
+    max-width: 20px;
 }
 
-.form-group button:hover{
+.form-container .ingredient-field button:hover{
     color: white;
     background-color: crimson;
 }
 
-.form-group .add__ingredient button{
+.form-container .ingredient-field .hidden-label{
+    position: absolute;
+    left: -9999px;
+}
+
+.form-container .submit__btn button{
     padding-top: 7px;
     padding-bottom: 7px;
     width: 100%;
@@ -1005,25 +1012,30 @@ button:hover{
     transition: 300ms;
 }
 
-.form-group .add__ingredient button:hover{
+.form-container .submit__btn button:hover{
     padding-top: 7px;
     padding-bottom: 7px;
     width: 100%;
     background-color: #1685bc9f;
 }
 
-.select__ingredient{
+.ingredient-field{
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.select__ingredient select{
+.ingredient-field select{
     padding-top: 7px;
     padding-bottom: 7px;
 }
 
-.form-container .submit-btn {
+.ingredient-field .django-select2 select{
+    padding: 15px;
+}
+
+.form-container .submit__btn {
+    margin: 10px;
     display: block;
     width: 100%;
     padding: 10px;
@@ -1035,7 +1047,7 @@ button:hover{
     cursor: pointer;
 }
 
-.form-container .submit-btn:hover {
+.form-container .submit__btn:hover {
     background-color: #0056b3;
 }
 

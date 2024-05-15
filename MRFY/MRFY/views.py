@@ -206,28 +206,90 @@ def delete_item(request, item_id):
 
 def publicar_receta(request):
     if request.method == 'POST':
-        form = RecipeForm(request.POST, request.FILES)
-        if form.is_valid():
-            receta = form.save(commit=False)
-            receta.Autor = request.user
-            receta.save()
+        nombre = request.POST.get('nombre')
+        calorias = request.POST.get('calorias')
+        carb_hidratos = request.POST.get('carb_hidratos')
+        proteinas = request.POST.get('proteinas')
+        grasas = request.POST.get('grasas')
+        instrucciones = request.POST.get('instrucciones')
+        comentarios = request.POST.get('comentarios')
+        tiempo_preparacion = request.POST.get('tiempo_preparacion')
+        imagen = request.FILES.get('imagen')
+
+        receta = Recipe(
+            Autor=request.user,
+            Nombre=nombre,
+            Calorias=calorias,
+            CarbHidratos=carb_hidratos,
+            Proteinas=proteinas,
+            Grasas=grasas,
+            Instrucciones=instrucciones,
+            Comentarios=comentarios,
+            TiempoPreparación=tiempo_preparacion
+        )
+        
+        if imagen:
+            receta.Imagen = imagen
+        
+        receta.save()
+
+        etiquetas_ids = request.POST.getlist('etiquetas')
+        for etiqueta_id in etiquetas_ids:
+            etiqueta = Tag.objects.get(pk=etiqueta_id)
+            RecipeTag.objects.create(IDReceta=receta, IDTag=etiqueta)
+
+        ingredient_index = 0
+        while True:
+            ingrediente_key = f'ingredientes_{ingredient_index}'
+            cantidad_key = f'cantidades_{ingredient_index}'
+            unidad_key = f'unidades_{ingredient_index}'
             
-            ingredientes = form.cleaned_data['Ingredientes']
-            cantidad = form.cleaned_data['Cantidad']
-            unidad = form.cleaned_data['Unidad']
-            
-            for ingrediente in ingredientes:
-                RecipeIngredient.objects.create(
-                    IDReceta=receta,
-                    IDIngrediente=ingrediente,
-                    Cantidad=cantidad,
-                    Unidad=unidad
-                )
-            
-            return redirect('inicio')
-    else:
-        form = RecipeForm()
-    return render(request, 'publicar_receta/recipeform.html', {'form': form})
+            if ingrediente_key in request.POST:
+                ingrediente_id = request.POST[ingrediente_key]
+                cantidad = request.POST[cantidad_key]
+                unidad = request.POST[unidad_key]
+                
+                if ingrediente_id and cantidad and unidad:
+                    ingrediente = Ingredient.objects.get(pk=ingrediente_id)
+                    RecipeIngredient.objects.create(
+                        IDReceta=receta,
+                        IDIngrediente=ingrediente,
+                        Cantidad=cantidad,
+                        Unidad=unidad
+                    )
+            else:
+                break
+
+            ingredient_index += 1
+
+        return redirect('inicio')
+
+    tags = Tag.objects.all()
+    ingredients = Ingredient.objects.all()
+    unidades = [
+        ('gramos', 'Gramos'),
+        ('kilogramos', 'Kilogramos'),
+        ('mililitros', 'Mililitros'),
+        ('litros', 'Litros'),
+        ('piezas', 'Piezas'),
+        ('docenas', 'Docenas'),
+        ('cucharadas', 'Cucharadas'),
+        ('cucharaditas', 'Cucharaditas'),
+        ('tazas', 'Tazas'),
+        ('onzas', 'Onzas'),
+        ('libras', 'Libras'),
+        ('galones', 'Galones'),
+        ('pintas', 'Pintas'),
+        ('centilitros', 'Centilitros'),
+        ('decilitros', 'Decilitros'),
+        ('onzas líquidas', 'Onzas líquidas'),
+        ('puñados', 'Puñados'),
+        ('rebanadas', 'Rebanadas'),
+        ('dientes', 'Dientes'),
+        ('ramas', 'Ramas'),
+    ]
+    return render(request, 'publicar_receta/recipeform.html', {'tags': tags, 'ingredients': ingredients, 'unidades': unidades})
+
 
 def brew_coffee(request):
     if getattr(request, 'brew_method', False):

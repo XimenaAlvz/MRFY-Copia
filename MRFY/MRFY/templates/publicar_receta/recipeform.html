@@ -6,14 +6,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio</title>
+    <title>Subir receta</title>
     <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
     <link rel="stylesheet" href="{% static 'css/estilos2.css' %}">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/
-    ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=REM&
-    display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
 </head>
@@ -53,7 +49,7 @@
 
         <div class="options__menu">
 
-            <a href="/inicio" class="select">
+            <a href="/inicio">
                 <div class="option">
                     <i class='bx bx-home' title="Inicio"></i>
                     <!---<object data="{% static 'images/home-4-svgrepo-com.svg' %}" type="image/svg+xml" class="svg__icon" title="Inicio"></object>--->
@@ -62,7 +58,7 @@
                 </div>
             </a>
 
-            <a href="#">
+            <a href="/recipeform" class="select">
                 <div class="option">
                     <i class='bx bx-add-to-queue' title="Subir receta"></i>
                     <!---<img src="{% static 'images/add-ellipse-svgrepo-com.svg' %}" alt="" class="svg__icon" title="Subir receta">--->
@@ -125,12 +121,86 @@
     </div>
 
     <main>
-        <div class="main__container">
-            <div class="form__container">
+        <div class="main__container" id="recipeform__settings">
+            <div class="form-container">
                 <h1>Publicar Receta</h1>
-                <form method="post" enctype="multipart/form-data">
+                <form id="recipe-form" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                    {{ form.as_p }}
+                    <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                    </div>
+    
+                    <div class="form-group">
+                    <label for="calorias">Calorías</label>
+                    <input type="text" id="calorias" name="calorias">
+                    </div>
+    
+                    <div class="form-group">
+                    <label for="carb_hidratos">Carbohidratos</label>
+                    <input type="text" id="carb_hidratos" name="carb_hidratos">
+                    </div>
+    
+                    <div class="form-group">
+                    <label for="proteinas">Proteínas</label>
+                    <input type="text" id="proteinas" name="proteinas">
+                    </div>
+    
+                    <div class="form-group">
+                    <label for="grasas">Grasas</label>
+                    <input type="text" id="grasas" name="grasas">
+                    </div>
+    
+                    <div class="form-group">
+                    <label for="instrucciones">Instrucciones</label>
+                    <textarea id="instrucciones" name="instrucciones"></textarea>
+                    </div>
+    
+                    <div class="form-group">
+                    <label for="comentarios">Comentarios</label>
+                    <textarea id="comentarios" name="comentarios"></textarea>
+                    </div>
+    
+                    <div class="form-group">
+                    <label for="tiempo_preparacion">Tiempo de Preparación</label>
+                    <input type="text" id="tiempo_preparacion" name="tiempo_preparacion">
+                    </div>
+    
+                    <div class="form-group">
+                    <label for="imagen">Imagen</label>
+                    <input type="file" id="imagen" name="imagen">
+                    </div>
+    
+                    <div class="form-group">
+                    <label for="etiquetas">Etiquetas</label>
+                    <select id="etiquetas" name="etiquetas" multiple class="django-select2">
+                        {% for tag in tags %}
+                            <option value="{{ tag.pk }}">{{ tag.Nombre }}</option>
+                        {% endfor %}
+                    </select>
+                    </div>
+    
+                    <div class="form-group">
+                    <div id="ingredient-fields">
+                        <label for="ingrediente_0">Ingrediente</label>
+                        <div class="ingredient-field">
+                            <select class="django-select2" name="ingredientes_0">
+                                {% for ingredient in ingredients %}
+                                    <option value="{{ ingredient.pk }}">{{ ingredient.Nombre }}</option>
+                                {% endfor %}
+                            </select>
+                            <!---<label for="cantidad_0">Cantidad</label>--->
+                            <input type="number" name="cantidades_0" placeholder="Cantidad">
+                            <!---<label for="unidad_0">Unidad</label>--->
+                            <select name="unidades_0">
+                                {% for unit, label in unidades %}
+                                    <option value="{{ unit }}">{{ label }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    </div>
+                    <button type="button" id="add-ingredient-btn" class="submit__btn">Agregar Ingrediente</button>
                     <button type="submit" class="submit__btn">Publicar</button>
                 </form>
             </div>
@@ -138,12 +208,44 @@
     </main>
     
     
-
-<script src="{% static 'js/display_menu.js' %}"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="{% static 'js/display_menu.js' %}"></script>
+<!---<script src="{% static 'js/addingredient.js' %}"></script>--->
 <script>
     $(document).ready(function() {
+        let ingredientIndex = 1;
+
+        $('#add-ingredient-btn').click(function() {
+            var ingredientFields = $('#ingredient-fields');
+            var ingredientTemplate = `
+                <div class="ingredient-field">
+                    <label for="ingrediente_${ingredientIndex}" class="hidden-label">Ingrediente</label>
+                    <select class="django-select2" name="ingredientes_${ingredientIndex}">
+                        {% for ingredient in ingredients %}
+                            <option value="{{ ingredient.pk }}">{{ ingredient.Nombre }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="cantidad_${ingredientIndex}" class="hidden-label">Cantidad</label>
+                    <input type="number" name="cantidades_${ingredientIndex}" placeholder="Cantidad">
+                    <label for="unidad_${ingredientIndex}" class="hidden-label">Unidad</label>
+                    <select name="unidades_${ingredientIndex}">
+                        {% for unit, label in unidades %}
+                            <option value="{{ unit }}">{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="button" class="remove-ingredient-btn"><i class='bx bx-x' ></i></button>
+                </div>
+            `;
+            ingredientFields.append(ingredientTemplate);
+            $('.django-select2').select2();
+            ingredientIndex++;
+        });
+        
+        $(document).on('click', '.remove-ingredient-btn', function() {
+            $(this).parent('.ingredient-field').remove();
+        });
+
         $('.django-select2').select2();
     });
 </script>
