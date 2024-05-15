@@ -17,7 +17,7 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
-from MRFY.views import index, inicio, recipe, search, register_user, login_user, logout_user, lista_compras, add_to_shopping_list, clear_shopping_list, lista_edit, guardar_cambios_lista, delete_item, publicar_receta, brew_coffee, teapot_view
+from MRFY.views import index, inicio, recipe, search, register_user, login_user, logout_user, lista_compras, add_to_shopping_list, clear_shopping_list, lista_edit, guardar_cambios_lista, delete_item, publicar_receta, eliminar_publicacion, brew_coffee, teapot_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -36,6 +36,7 @@ urlpatterns = [
     path('list_edit/', lista_edit, name='lista_edit'),
     path('delete_item/<int:item_id>/', delete_item, name='delete_item'),
     path('recipeform/', publicar_receta, name='publicar_receta'),
+    path('delete/<int:id_receta>/', eliminar_publicacion, name='eliminar_publicacion'),
     path('brew/', brew_coffee, name='brew_coffee'),
     path('teapot/', teapot_view, name='teapot'),
     

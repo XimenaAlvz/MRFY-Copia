@@ -83,6 +83,7 @@ def login_user(request):
     
     return render(request, 'login_registro/login.html')
 
+@login_required
 def logout_user(request):
     logout(request)  # Cerrar la sesión del usuario
     return redirect('inicio') # Redirigir a la página de inicio
@@ -114,6 +115,7 @@ def search(request):
 
     return render(request, 'search/search.html', {'recipes': recipes, 'query': query, 'user': request.user})
 
+@login_required
 def lista_compras(request):
     # Obtener la lista de compras del usuario autenticado
     shopping_list, created = ShoppingList.objects.get_or_create(user=request.user)
@@ -127,7 +129,7 @@ def lista_compras(request):
 
     return render(request, 'lista_compras/lista.html', context)
 
-
+@login_required
 def add_to_shopping_list(request, recipe_id):
     recipe = get_object_or_404(Recipe, pk=recipe_id)
 
@@ -157,6 +159,7 @@ def add_to_shopping_list(request, recipe_id):
 
     return redirect('lista_compras')
 
+@login_required
 def lista_edit(request):
     # Obtener la lista de compras del usuario autenticado
     shopping_list = ShoppingList.objects.get(user=request.user)
@@ -170,6 +173,7 @@ def lista_edit(request):
     
     return render(request, 'lista_compras/lista_edit.html', context)
 
+@login_required
 def guardar_cambios_lista(request):
     if request.method == 'POST':
         # Obtener la lista de compras del usuario autenticado
@@ -189,6 +193,7 @@ def guardar_cambios_lista(request):
     
     return redirect('lista_compras')
 
+@login_required
 def clear_shopping_list(request):
     # Obtener la lista de compras del usuario autenticado
     shopping_list = request.user.shopping_list
@@ -197,6 +202,7 @@ def clear_shopping_list(request):
     # Redirigir a la página de lista de compras
     return redirect('lista_compras')
 
+@login_required
 def delete_item(request, item_id):
     if request.method == 'POST':
         item = get_object_or_404(ShoppingListItem, id=item_id)
@@ -204,6 +210,7 @@ def delete_item(request, item_id):
         return JsonResponse({'status': 'success'})
     return JsonResponse({'status': 'fail'}, status=400)
 
+@login_required
 def publicar_receta(request):
     if request.method == 'POST':
         nombre = request.POST.get('nombre')
@@ -290,6 +297,17 @@ def publicar_receta(request):
     ]
     return render(request, 'publicar_receta/recipeform.html', {'tags': tags, 'ingredients': ingredients, 'unidades': unidades})
 
+
+def eliminar_publicacion(request, id_receta):
+    receta = get_object_or_404(Recipe, IDReceta=id_receta)
+
+    if request.user.is_superuser or request.user.is_staff or request.user == receta.Autor:
+
+        receta.delete()
+
+        return redirect('inicio')
+    else:
+        return redirect('vista_receta', id_receta=id_receta)
 
 def brew_coffee(request):
     if getattr(request, 'brew_method', False):

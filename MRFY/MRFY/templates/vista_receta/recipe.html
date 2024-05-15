@@ -58,7 +58,11 @@
                 </div>
             </a>
 
+            {% if user.is_authenticated %}
             <a href="/recipeform">
+            {% else %}
+            <a href="/login">
+            {% endif %}
                 <div class="option">
                     <i class='bx bx-add-to-queue' title="Subir receta"></i>
                     <!---<img src="{% static 'images/add-ellipse-svgrepo-com.svg' %}" alt="" class="svg__icon" title="Subir receta">--->
@@ -149,14 +153,20 @@
                             <i class='bx bx-calendar' ></i> Agregar a recetario semanal
                         </button>
                     </div>
+
+                    {% if user.is_superuser or user.is_staff or user == receta.Autor %}
                     <div class="userpub__opts">
                         <button class="edit__btn">
                             <i class='bx bx-edit-alt'></i> Editar receta
                         </button>
-                        <button class="delete__btn">
-                            <i class='bx bx-trash' ></i> Eliminar publicación
-                        </button>
+                        <form action="{% url 'eliminar_publicacion' receta.IDReceta %}" method="POST">
+                        {% csrf_token %}
+                            <button type="submit" class="delete__btn">
+                                <i class='bx bx-trash' ></i> Eliminar publicación
+                            </button>
+                        </form>
                     </div>
+                    {% endif %}
 
                     <hr>
 
