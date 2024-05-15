@@ -21,6 +21,7 @@ class Recipe(models.Model):
     Imagen = models.TextField(default='images/wallpaper4.jpg')
     Etiquetas = models.ManyToManyField('Tag', through='RecipeTag')
     Ingredientes = models.ManyToManyField('Ingredient', through='RecipeIngredient')
+    Verificado = models.BooleanField(default=False)
 
 class CustomUserManager(UserManager):
     def _create_user(self, email, password, **extra_fields):

@@ -307,7 +307,17 @@ def eliminar_publicacion(request, id_receta):
 
         return redirect('inicio')
     else:
-        return redirect('vista_receta', id_receta=id_receta)
+        return redirect('recipe_detail', id_receta=id_receta)
+    
+def verificar_receta(request, id_receta):
+    receta = get_object_or_404(Recipe, IDReceta=id_receta)
+
+    if request.user.is_superuser or request.user.is_staff:
+        receta.Verificado = not receta.Verificado
+        receta.save()
+        return redirect('recipe_detail', id_receta=id_receta) 
+    else:
+        return redirect('recipe_detail', id_receta=id_receta)
 
 def brew_coffee(request):
     if getattr(request, 'brew_method', False):

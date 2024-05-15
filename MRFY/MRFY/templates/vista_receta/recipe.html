@@ -137,7 +137,14 @@
 
 
                 <div class="recipe__information">
+
+                    <div class="info__verificado">
                     <h1>{{ receta.Nombre }}</h1>
+
+                    {% if receta.Verificado %}
+                    <label for="verificado"><i class='bx bx-check-shield'></i>Receta verificada</label>
+                    {% endif %}
+                    </div>
 
                     <div class="interaction">
                         <button class="favorite__btn">
@@ -154,19 +161,34 @@
                         </button>
                     </div>
 
-                    {% if user.is_superuser or user.is_staff or user == receta.Autor %}
                     <div class="userpub__opts">
-                        <button class="edit__btn">
-                            <i class='bx bx-edit-alt'></i> Editar receta
-                        </button>
-                        <form action="{% url 'eliminar_publicacion' receta.IDReceta %}" method="POST">
-                        {% csrf_token %}
-                            <button type="submit" class="delete__btn">
-                                <i class='bx bx-trash' ></i> Eliminar publicación
+                        {% if user.is_superuser or user.is_staff or user == receta.Autor %}
+                            <button class="edit__btn">
+                                <i class='bx bx-edit-alt'></i> Editar receta
+                            </button>
+                            <form action="{% url 'eliminar_publicacion' receta.IDReceta %}" method="POST">
+                            {% csrf_token %}
+                                <button type="submit" class="delete__btn">
+                                    <i class='bx bx-trash' ></i> Eliminar publicación
+                                </button>
+                            </form>
+                        {% endif %}
+
+                        {% if user.is_superuser or user.is_Staff %}
+                        <form action="{% url 'verificar_receta' receta.IDReceta %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="{% if receta.Verificado %}verificado{% else %}no-verificado{% endif %}">
+                                {% if receta.Verificado %}
+                                <i class='bx bx-x-circle' ></i>
+                                    Eliminar verificado
+                                {% else %}
+                                <i class='bx bx-check-circle' ></i>
+                                    Verificar receta
+                                {% endif %}
                             </button>
                         </form>
+                        {% endif %}
                     </div>
-                    {% endif %}
 
                     <hr>
 
@@ -187,8 +209,8 @@
                     <h3>Tiempo de preparación</h3>
                     <ul>
                         <li><span>Tiempo total</span>: {{ receta.TiempoPreparación }}</li>
-                        <li><span>Preparación</span>: 00:00</li>
-                        <li><span>Cocina</span>: 00:00</li>
+                        <!---<li><span>Preparación</span>: 00:00</li>
+                        <li><span>Cocina</span>: 00:00</li>--->
                     </ul>
                 </div>
 
@@ -240,6 +262,16 @@
                             <p class="ammount">{{ receta.Grasas }}</p>
                         </div>
                     </div>
+                </div>
+
+                <hr>
+
+                <div class="author__info">
+                    <a href="#" class="autor">
+                    <img src="{% static 'images/user-icon.png' %}" alt="icono" class="icon">
+                    <p>{{ receta.Autor.name }}</p>
+                    </a>
+                    <p>{{ receta.FechaCreación }}</p>
                 </div>
 
             </div>

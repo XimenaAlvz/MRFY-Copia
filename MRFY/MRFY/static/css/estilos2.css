@@ -549,6 +549,61 @@ a.select{
     font-size: 2.8rem;
 }
 
+.recipe__information .info__verificado{
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.recipe__information .info__verificado label{
+    background-color: rgb(142, 230, 9);
+    color: black;
+    border-radius: 10px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.recipe__information .info__verificado i{
+    padding: 3px;
+}
+
+.author__info{
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.author__info a{
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-left: 10px;
+    color: black;
+}
+
+.author__info a p{
+    margin-left: 5px;
+}
+
+.author__info a img{
+    border-radius: 50%;
+}
+
+.author__info p{
+    margin-right: 10px;
+}
+
+.userpub__opts .verificado:hover{
+    background-color: crimson;
+}
+
+.userpub__opts .no-verificado:hover{
+    background-color: rgb(83, 219, 29);
+}
+
 .container__recipe h2{
     color: #83654e;
     margin-bottom: 1rem;
