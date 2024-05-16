@@ -1,3 +1,5 @@
 MRFY/MRFY/__pycache__
 MRFY/MRFY/migrations/__pycache__
 MRFY/MRFY/templatetags/__pycache__
+
+MRFY/MRFY/staticfiles/

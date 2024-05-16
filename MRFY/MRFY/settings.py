@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_select2',
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 AUTH_USER_MODEL = 'MRFY.User'
@@ -129,10 +131,12 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'MRFY/static'),)
 MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'MRFY/media')
 
+CKEDITOR_UPLOAD_PATH = "uploads/"
+
 
 # Configuración para WhiteNoise
-#STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-#STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'MRFY/staticfiles')
+STATIC_URL = '/static/'
 
 #STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 

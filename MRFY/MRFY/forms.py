@@ -1,6 +1,7 @@
 from django import forms
 from django_select2.forms import Select2MultipleWidget, Select2Widget
 from .models import Recipe, Tag, Ingredient
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 UNIDADES_CHOICES = [
     ('gramos', 'Gramos'),
@@ -26,6 +27,9 @@ UNIDADES_CHOICES = [
 ]
 
 class RecipeForm(forms.ModelForm):
+
+    Instrucciones = forms.CharField(widget=CKEditorUploadingWidget())
+
     Ingredientes = forms.ModelChoiceField(
         queryset=Ingredient.objects.all(),
         widget=Select2Widget(attrs={'class': 'hidden'}),

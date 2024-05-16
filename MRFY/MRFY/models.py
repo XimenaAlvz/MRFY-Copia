@@ -2,6 +2,9 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, UserM
 from django.db import models
 from django.utils import timezone
 from django.conf import settings
+from ckeditor.fields import RichTextField
+from django_ckeditor_5.fields import CKEditor5Field
+from ckeditor_uploader.fields import RichTextUploadingField
 
 # Create your models here.
 
@@ -14,7 +17,8 @@ class Recipe(models.Model):
     CarbHidratos = models.CharField(max_length=50, null=True)
     Proteinas = models.CharField(max_length=50, null=True)
     Grasas = models.CharField(max_length=50, null=True)
-    Instrucciones = models.TextField(null=True)
+    #Instrucciones = models.TextField(null=True)
+    Instrucciones = RichTextUploadingField(null=True)
     Comentarios = models.TextField(null=True)
     Valoración = models.DecimalField(max_digits=3, decimal_places=1, null=True)
     TiempoPreparación = models.CharField(max_length=50, null=True)

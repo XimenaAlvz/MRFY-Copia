@@ -689,7 +689,7 @@ a.select{
 .instructions .item{
     padding-left: .5rem;
     margin-bottom: .5rem;
-    display: flex;
+    overflow: auto;
 }
 
 .instructions .item .num{

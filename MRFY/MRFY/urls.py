@@ -17,7 +17,8 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from ckeditor_uploader import views as ckeditor_views
 from MRFY.views import index, inicio, recipe, search, register_user, login_user, logout_user, lista_compras, add_to_shopping_list, clear_shopping_list, lista_edit, guardar_cambios_lista, delete_item, publicar_receta, eliminar_publicacion, verificar_receta, editar_receta, brew_coffee, teapot_view
 
 urlpatterns = [
@@ -42,6 +43,10 @@ urlpatterns = [
     path('editar/<int:id_receta>/', editar_receta, name='editar_receta'),
     path('brew/', brew_coffee, name='brew_coffee'),
     path('teapot/', teapot_view, name='teapot'),
+    #path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('ckeditor/upload/', ckeditor_views.upload, name='ckeditor_upload'),
+    path('ckeditor/browse/', ckeditor_views.browse, name='ckeditor_browse'),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
