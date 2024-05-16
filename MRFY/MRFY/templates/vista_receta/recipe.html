@@ -163,9 +163,11 @@
 
                     <div class="userpub__opts">
                         {% if user.is_superuser or user.is_staff or user == receta.Autor %}
-                            <button class="edit__btn">
-                                <i class='bx bx-edit-alt'></i> Editar receta
-                            </button>
+                            <form action="{% url 'editar_receta' receta.IDReceta %}" method="GET">
+                                <button type="submit" class="edit__btn">
+                                    <i class='bx bx-edit-alt'></i> Editar receta
+                                </button>
+                            </form>
                             <form action="{% url 'eliminar_publicacion' receta.IDReceta %}" method="POST">
                             {% csrf_token %}
                                 <button type="submit" class="delete__btn">

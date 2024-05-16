@@ -318,6 +318,95 @@ def verificar_receta(request, id_receta):
         return redirect('recipe_detail', id_receta=id_receta) 
     else:
         return redirect('recipe_detail', id_receta=id_receta)
+    
+def editar_receta(request, id_receta):
+    receta = get_object_or_404(Recipe, IDReceta=id_receta)
+
+    if request.method == 'POST':
+        nombre = request.POST.get('nombre')
+        calorias = request.POST.get('calorias')
+        carb_hidratos = request.POST.get('carb_hidratos')
+        proteinas = request.POST.get('proteinas')
+        grasas = request.POST.get('grasas')
+        instrucciones = request.POST.get('instrucciones')
+        comentarios = request.POST.get('comentarios')
+        tiempo_preparacion = request.POST.get('tiempo_preparacion')
+        imagen = request.FILES.get('imagen')
+
+        receta.Nombre = nombre
+        receta.Calorias = calorias
+        receta.CarbHidratos = carb_hidratos
+        receta.Proteinas = proteinas
+        receta.Grasas = grasas
+        receta.Instrucciones = instrucciones
+        receta.Comentarios = comentarios
+        receta.TiempoPreparación = tiempo_preparacion
+        receta.Verificado = False
+
+        if imagen:
+            receta.Imagen = imagen
+        
+        receta.save()
+
+        receta.Etiquetas.clear()
+        etiquetas_ids = request.POST.getlist('etiquetas')
+        for etiqueta_id in etiquetas_ids:
+            etiqueta = Tag.objects.get(pk=etiqueta_id)
+            RecipeTag.objects.create(IDReceta=receta, IDTag=etiqueta)
+
+        receta.Ingredientes.clear()
+        ingredient_index = 0
+        while True:
+            ingrediente_key = f'ingredientes_{ingredient_index}'
+            cantidad_key = f'cantidades_{ingredient_index}'
+            unidad_key = f'unidades_{ingredient_index}'
+            
+            if ingrediente_key in request.POST:
+                ingrediente_id = request.POST[ingrediente_key]
+                cantidad = request.POST[cantidad_key]
+                unidad = request.POST[unidad_key]
+                
+                if ingrediente_id and cantidad and unidad:
+                    ingrediente = Ingredient.objects.get(pk=ingrediente_id)
+                    RecipeIngredient.objects.create(
+                        IDReceta=receta,
+                        IDIngrediente=ingrediente,
+                        Cantidad=cantidad,
+                        Unidad=unidad
+                    )
+            else:
+                break
+
+            ingredient_index += 1
+
+        return redirect('inicio')
+
+    tags = Tag.objects.all()
+    ingredients = Ingredient.objects.all()
+    unidades = [
+        ('gramos', 'Gramos'),
+        ('kilogramos', 'Kilogramos'),
+        ('mililitros', 'Mililitros'),
+        ('litros', 'Litros'),
+        ('piezas', 'Piezas'),
+        ('docenas', 'Docenas'),
+        ('cucharadas', 'Cucharadas'),
+        ('cucharaditas', 'Cucharaditas'),
+        ('tazas', 'Tazas'),
+        ('onzas', 'Onzas'),
+        ('libras', 'Libras'),
+        ('galones', 'Galones'),
+        ('pintas', 'Pintas'),
+        ('centilitros', 'Centilitros'),
+        ('decilitros', 'Decilitros'),
+        ('onzas líquidas', 'Onzas líquidas'),
+        ('puñados', 'Puñados'),
+        ('rebanadas', 'Rebanadas'),
+        ('dientes', 'Dientes'),
+        ('ramas', 'Ramas'),
+    ]
+
+    return render(request, 'editar_receta/recipeedit.html', {'receta': receta, 'tags': tags, 'ingredients': ingredients, 'unidades': unidades})
 
 def brew_coffee(request):
     if getattr(request, 'brew_method', False):

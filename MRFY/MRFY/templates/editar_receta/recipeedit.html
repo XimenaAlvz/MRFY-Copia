@@ -1,0 +1,263 @@
+{% load static %}
+{% load custom_filters %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subir receta</title>
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/estilos2.css' %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+</head>
+<body id="body">
+
+    <header id="header" class="header_standard">
+        <div class="icon__menu">
+            <img src="{% static 'images/menu-alt-1-svgrepo-com.svg' %}" alt="icono" class="svg__icon" id="btn_open">
+        </div>
+
+        <div class="search__box">
+            <form action="{% url 'search' %}" method="GET">
+                <input type="text" name="q" class="search__input" placeholder="Buscar receta...">
+                <button class="search__button" type="submit">
+                    <i class="bx bx-search-alt-2"></i>
+                </button>
+            </form>
+        </div>
+
+        <div class="icon__login">
+
+            <a href="#" class="login">
+                <img src="{% static 'images/profile-1335-svgrepo-com.svg' %}" alt="" class="svg__icon" title="Iniciar sesion">
+            </a>
+
+        </div>
+    </header>
+
+    <div class="menu__side" id="menu_side">
+
+        <div class="name__page">
+            <a href="/inicio">
+                <img src="{% static 'images/icon.png' %}" alt="icono" class="icon">
+            </a>
+            <h4 class="title">MRFY</h4>
+        </div>
+
+        <div class="options__menu">
+
+            <a href="/inicio">
+                <div class="option">
+                    <i class='bx bx-home' title="Inicio"></i>
+                    <!---<object data="{% static 'images/home-4-svgrepo-com.svg' %}" type="image/svg+xml" class="svg__icon" title="Inicio"></object>--->
+                    <!---<img src="{% static 'images/home-4-svgrepo-com.svg' %}" alt="" class="svg__icon" title="Inicio">--->
+                    <h4>Inicio</h4>
+                </div>
+            </a>
+
+            {% if user.is_authenticated %}
+            <a href="/recipeform" class="select">
+            {% else %}
+            <a href="/login">
+            {% endif %}
+                <div class="option">
+                    <i class='bx bx-add-to-queue' title="Subir receta"></i>
+                    <!---<img src="{% static 'images/add-ellipse-svgrepo-com.svg' %}" alt="" class="svg__icon" title="Subir receta">--->
+                    <h4>Subir receta</h4>
+                </div>
+            </a>
+
+            <a href="#">
+                <div class="option">
+                    <i class='bx bx-star' title="Favoritos"></i>
+                    <!---<img src="{% static 'images/hearth-svgrepo-com.svg' %}" alt="" class="svg__icon" title="Favoritos">--->
+                    <h4>Favoritos</h4>
+                </div>
+            </a>
+
+            {% if user.is_authenticated %}
+            <a href="/lista">
+            {% else %}
+            <a href="/login">
+            {% endif %}
+                <div class="option">
+                    <i class='bx bx-cart' title="Lista de compras"></i>
+                    <!---<img src="{% static 'images/shopping-cart-8-svgrepo-com.svg' %}" alt="" class="svg__icon" title="Lista de compras">--->
+                    <h4>Lista de compras</h4>
+                </div>
+            </a>
+
+            <a href="#">
+                <div class="option">
+                    <i class='bx bx-calendar' title="Recetario semanal"></i>
+                    <!---<img src="{% static 'images/calendar-days-svgrepo-com.svg' %}" alt="" class="svg__icon" title="Recetario semanal">--->
+                    <h4>Recetario semanal</h4>
+                </div>
+            </a>
+
+            {% if user.is_authenticated %}
+
+            <a href="/logout">
+                <div class="option">
+                    <i class='bx bx-log-out' title="Logout"></i>
+                    <!---<img src="{% static 'images/login-svgrepo-com.svg' %}" alt="" class="svg__icon" title="Iniciar sesion">--->
+                    <h4>Cerrar sesion</h4>
+                </div>
+            </a>
+
+            {% else %}
+
+            <a href="/login">
+                <div class="option">
+                    <i class='bx bx-log-in' title="Login"></i>
+                    <!---<img src="{% static 'images/login-svgrepo-com.svg' %}" alt="" class="svg__icon" title="Iniciar sesion">--->
+                    <h4>Iniciar sesion</h4>
+                </div>
+            </a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+    <main>
+        <div class="main__container" id="recipeform__settings">
+            <div class="form-container">
+                <h1>Publicar Receta</h1>
+                <form id="recipe-form" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" value="{{ receta.Nombre }}" required>
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="calorias">Calorías</label>
+                        <input type="text" id="calorias" name="calorias" value="{{ receta.Calorias }}">
+                    </div>
+    
+                    <div class="form-group">
+                    <label for="carb_hidratos">Carbohidratos</label>
+                    <input type="text" id="carb_hidratos" name="carb_hidratos" value="{{ receta.CarbHidratos }}">
+                    </div>
+    
+                    <div class="form-group">
+                    <label for="proteinas">Proteínas</label>
+                    <input type="text" id="proteinas" name="proteinas" value="{{ receta.Proteinas }}">
+                    </div>
+    
+                    <div class="form-group">
+                    <label for="grasas">Grasas</label>
+                    <input type="text" id="grasas" name="grasas" value="{{ receta.Grasas }}">
+                    </div>
+    
+                    <div class="form-group">
+                    <label for="instrucciones">Instrucciones</label>
+                    <textarea id="instrucciones" name="instrucciones" >{{ receta.Instrucciones }}</textarea>
+                    </div>
+    
+                    <div class="form-group">
+                    <label for="comentarios">Comentarios</label>
+                    <textarea id="comentarios" name="comentarios">{{ receta.Comentarios }}</textarea>
+                    </div>
+    
+                    <div class="form-group">
+                    <label for="tiempo_preparacion">Tiempo de Preparación</label>
+                    <input type="text" id="tiempo_preparacion" name="tiempo_preparacion" value="{{ receta.TiempoPreparación }}">
+                    </div>
+    
+                    <div class="form-group">
+                    <label for="imagen">Imagen</label>
+                    <input type="file" id="imagen" name="imagen">
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="etiquetas">Etiquetas</label>
+                        <select id="etiquetas" name="etiquetas" multiple class="django-select2">
+                            {% for tag in tags %}
+                                <option value="{{ tag.pk }}" {% if tag in receta.Etiquetas.all %} selected {% endif %}>{{ tag.Nombre }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+    
+                    <div class="form-group">
+                        <div id="ingredient-fields">
+                            {% for ingrediente in receta.Ingredientes.all %}
+                                <div class="ingredient-field">
+                                    <label for="ingrediente_{{ forloop.counter0 }}" class="hidden-label">Ingrediente</label>
+                                    <select class="django-select2" name="ingredientes_{{ forloop.counter0 }}">
+                                        {% for ingredient in ingredients %}
+                                            <option value="{{ ingredient.pk }}" {% if ingredient.pk == ingrediente.pk %} selected {% endif %}>{{ ingredient.Nombre }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <label for="cantidad_{{ forloop.counter0 }}" class="hidden-label">Cantidad</label>
+                                    <input type="number" name="cantidades_{{ forloop.counter0 }}" placeholder="Cantidad" value="{{ ingrediente.Cantidad }}">
+                                    <label for="unidad_{{ forloop.counter0 }}" class="hidden-label">Unidad</label>
+                                    <select name="unidades_{{ forloop.counter0 }}">
+                                        {% for unit, label in unidades %}
+                                            <option value="{{ unit }}" {% if unit == ingrediente.Unidad %} selected {% endif %}>{{ label }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <button type="button" class="remove-ingredient-btn"><i class='bx bx-x' ></i></button>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <button type="button" id="add-ingredient-btn" class="submit__btn">Agregar Ingrediente</button>
+                    <button type="submit" class="submit__btn">Publicar</button>
+                </form>
+            </div>
+        </div>
+    </main>
+    
+    
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="{% static 'js/display_menu.js' %}"></script>
+<!---<script src="{% static 'js/addingredient.js' %}"></script>--->
+{% with ingredient_count=receta.ingredientes.all|length %}
+<script>
+    $(document).ready(function() {
+        let ingredientIndex = {{ ingredient_count }};
+
+        $('#add-ingredient-btn').click(function() {
+            var ingredientFields = $('#ingredient-fields');
+            var ingredientTemplate = `
+                <div class="ingredient-field">
+                    <label for="ingrediente_${ingredientIndex}" class="hidden-label">Ingrediente</label>
+                    <select class="django-select2" name="ingredientes_${ingredientIndex}">
+                        {% for ingredient in ingredients %}
+                            <option value="{{ ingredient.pk }}">{{ ingredient.Nombre }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="cantidad_${ingredientIndex}" class="hidden-label">Cantidad</label>
+                    <input type="number" name="cantidades_${ingredientIndex}" placeholder="Cantidad">
+                    <label for="unidad_${ingredientIndex}" class="hidden-label">Unidad</label>
+                    <select name="unidades_${ingredientIndex}">
+                        {% for unit, label in unidades %}
+                            <option value="{{ unit }}">{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="button" class="remove-ingredient-btn"><i class='bx bx-x' ></i></button>
+                </div>
+            `;
+            ingredientFields.append(ingredientTemplate);
+            $('.django-select2').select2();
+            ingredientIndex++;
+        });
+        
+        $(document).on('click', '.remove-ingredient-btn', function() {
+            $(this).parent('.ingredient-field').remove();
+        });
+
+        $('.django-select2').select2();
+    });
+</script>
+{% endwith %}
+    
+</body>
+</html>
